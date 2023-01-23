@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:medlist/Providers/DataProvider.dart';
 import 'package:medlist/Providers/UserProvider.dart';
 import 'package:medlist/pages/DietPlanScreen.dart';
 import 'package:medlist/pages/MedicineTimeScreen.dart';
@@ -22,13 +23,14 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => UserProvider()),
+        ChangeNotifierProvider(create: (_) => DataProvider()),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: LoginPage(),
+        home: HomeScreen(),
       ),
     );
   }

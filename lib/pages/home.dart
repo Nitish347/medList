@@ -6,6 +6,7 @@ import 'package:medlist/pages/ExerciseTimeScreen.dart';
 import 'package:medlist/pages/MedicineTimeScreen.dart';
 import 'package:medlist/pages/PastMedicines.dart';
 import 'package:medlist/pages/PastReport.dart';
+import 'package:medlist/widgets/drawer.dart';
 
 import '../constants/constants.dart';
 import '../widgets/grid.dart';
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
-        drawer: Drawer(),
+        drawer: drawer(context),
         appBar: AppBar(
           toolbarHeight: 60,
           shape: RoundedRectangleBorder(

@@ -58,17 +58,16 @@ class _MedicineTimeScreenState extends State<MedicineTimeScreen> {
           ),
         ),
         backgroundColor: Colors.white,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: height / 4,
-              child: Lottie.asset("assets/lottie/medicine.json"),
-            ),
-            Expanded(
-                child: Container(
-              decoration: BoxDecoration(),
-              child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: height / 4,
+                child: Lottie.asset("assets/lottie/medicine.json"),
+              ),
+              Container(
+                decoration: BoxDecoration(),
                 child: Column(
                     children: List.generate(medicines.length, (index) {
                   return MedicineTimeTile(
@@ -82,8 +81,8 @@ class _MedicineTimeScreenState extends State<MedicineTimeScreen> {
                   );
                 })),
               ),
-            )),
-          ],
+            ],
+          ),
         ),
       ),
     );

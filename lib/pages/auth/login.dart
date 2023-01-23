@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
+import 'package:medlist/Providers/DataProvider.dart';
 import 'package:medlist/pages/auth/verify.dart';
 import 'package:provider/provider.dart';
 
@@ -15,6 +16,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<UserProvider>(context, listen: false);
+    var provider1 = Provider.of<DataProvider>(context, listen: false);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -121,12 +123,18 @@ class LoginPage extends StatelessWidget {
                       padding: EdgeInsets.all(25.0),
                       child: InkWell(
                         onTap: () async {
-                          await FirestoreData.userData(context);
-                          print(provider.user?.phoneNumber);
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => VerifyPage()));
+                          // await FirestoreData.userData(context);
+                          // await FirestoreData.exerciseData(context);
+                          // await FirestoreData.medicinesData(context);
+                          // await FirestoreData.pastMedicineData(context);
+                          // print(provider.user?.phoneNumber);
+                          // print(provider1.medicinesList![0].time);
+                          // print(provider1.exerciseList);
+                          // print(provider1.pastMedicineList);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VerifyPage()));
                         },
                         child: Container(
                           height: 60,

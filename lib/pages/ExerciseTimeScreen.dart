@@ -54,17 +54,16 @@ class _ExerciseTimeScreenState extends State<ExerciseTimeScreen> {
           ),
         ),
         backgroundColor: Colors.white,
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              height: height / 4,
-              child: Lottie.asset("assets/lottie/yoga.json"),
-            ),
-            Expanded(
-                child: Container(
-              decoration: BoxDecoration(),
-              child: SingleChildScrollView(
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                height: height / 4,
+                child: Lottie.asset("assets/lottie/yoga.json"),
+              ),
+              Container(
+                decoration: BoxDecoration(),
                 child: Column(
                     children: List.generate(exercise.length, (index) {
                   return MedicineTimeTile(
@@ -78,8 +77,8 @@ class _ExerciseTimeScreenState extends State<ExerciseTimeScreen> {
                   );
                 })),
               ),
-            )),
-          ],
+            ],
+          ),
         ),
       ),
     );

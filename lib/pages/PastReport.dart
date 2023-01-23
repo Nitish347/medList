@@ -28,53 +28,51 @@ class PastReport extends StatelessWidget {
         ),
       ),
       backgroundColor: Colors.white,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // SizedBox(
-          //   height: height / 50,
-          // ),
-          Center(
-            child: Container(
-              height: height / 6,
-              child: Lottie.asset("assets/lottie/note.json"),
-            ),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Expanded(
-            child: SingleChildScrollView(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // SizedBox(
+            //   height: height / 50,
+            // ),
+            Center(
               child: Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: height / 30,
-                    ),
-                    GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 40,
-                        mainAxisSpacing: 40,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: ClampingScrollPhysics(),
-                        children: [
-                          for (int i = 0; i < 10; i++)
-                            grid(
-                              branch: "Report",
-                              images: "assets/lottie/note.json",
-                              // onTap: () => checkOption(i),
-                              // selected: i + 1 == optionSelected,
-                            )
-                        ]),
-                  ],
-                ),
+                height: height / 6,
+                child: Lottie.asset("assets/lottie/note.json"),
               ),
             ),
-          )
-        ],
+            SizedBox(
+              height: 10,
+            ),
+            Container(
+              margin: EdgeInsets.all(20),
+              // color: Colors.grey,
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: height / 30,
+                  ),
+                  GridView.count(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 40,
+                      mainAxisSpacing: 40,
+                      shrinkWrap: true,
+                      scrollDirection: Axis.vertical,
+                      physics: ClampingScrollPhysics(),
+                      children: [
+                        for (int i = 0; i < 10; i++)
+                          grid(
+                            branch: "Report",
+                            images: "assets/lottie/note.json",
+                            // onTap: () => checkOption(i),
+                            // selected: i + 1 == optionSelected,
+                          )
+                      ]),
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

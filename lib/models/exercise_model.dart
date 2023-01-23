@@ -5,7 +5,7 @@ class ExerciseModel {
   ExerciseModel({this.name, this.picUrl, this.time});
 
   factory ExerciseModel.fromJson(Map<String, dynamic> json) => ExerciseModel(
-      name: json["name"], picUrl: json["picUrl"], time: json["time"]);
+      name: json["name"], picUrl: json["picUrl"], time: json["time"].toDate());
 
   Map<String, dynamic> toJson() => {
         "name": name,
