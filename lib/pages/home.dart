@@ -5,13 +5,12 @@ import 'package:medlist/pages/DietPlanScreen.dart';
 import 'package:medlist/pages/ExerciseTimeScreen.dart';
 import 'package:medlist/pages/MedicineTimeScreen.dart';
 import 'package:medlist/pages/PastMedicines.dart';
+import 'package:medlist/pages/PastReport.dart';
 
 import '../constants/constants.dart';
 import '../widgets/grid.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
-
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -32,6 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
       case 4:
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => PastMedicines()));
+        break;
+      case 5:
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => PastReport()));
         break;
     }
   }
@@ -57,6 +60,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return SafeArea(
       child: Scaffold(
+        drawer: Drawer(),
         appBar: AppBar(
           toolbarHeight: 60,
           shape: RoundedRectangleBorder(
@@ -120,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(
                         height: 40,
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () => Navigator.push(
                             context,
                             MaterialPageRoute(

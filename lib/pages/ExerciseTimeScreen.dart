@@ -42,7 +42,7 @@ class _ExerciseTimeScreenState extends State<ExerciseTimeScreen> {
               bottom: Radius.circular(30),
             ),
           ),
-          backgroundColor: Colors.pinkAccent.withOpacity(0.9),
+          backgroundColor: Colors.redAccent.withOpacity(0.9),
           centerTitle: true,
           title: Text(
             "Exercise Time",
@@ -68,10 +68,10 @@ class _ExerciseTimeScreenState extends State<ExerciseTimeScreen> {
                 child: Column(
                     children: List.generate(exercise.length, (index) {
                   return MedicineTimeTile(
-                    color: Colors.pinkAccent.withOpacity(0.9),
+                    color: Colors.redAccent.withOpacity(0.9),
                     index: index,
-                    activeColor: Colors.pink.withOpacity(0.4),
-                    thumbColor: Colors.pink,
+                    activeColor: Colors.redAccent.withOpacity(0.4),
+                    thumbColor: Colors.redAccent,
                     trackColor: Colors.grey.withOpacity(0.5),
                     timing: timing[index],
                     title: exercise[index],

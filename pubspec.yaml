@@ -39,10 +39,15 @@ dependencies:
   google_fonts:
   lottie:
   flutter_switch :
+  firebase_auth:
+  firebase_core: ^2.1.1
+  cloud_firestore: ^4.3.1
+  firebase_storage:
   toggle_switch:
   animated_toggle_switch:
   flutter_neumorphic: ^3.2.0
   expandable: ^5.0.1
+
 
 dev_dependencies:
   flutter_test:
@@ -71,7 +76,6 @@ flutter:
     - doctor.json
     - assets/lottie/
     - assets/images/
-    - assets/images/medicine.jpg
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

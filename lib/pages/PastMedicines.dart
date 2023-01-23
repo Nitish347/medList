@@ -40,7 +40,7 @@ class _PastMedicinesState extends State<PastMedicines> {
             bottom: Radius.circular(30),
           ),
         ),
-        backgroundColor: Colors.blue.withOpacity(0.9),
+        backgroundColor: Colors.green.withOpacity(0.9),
         centerTitle: true,
         title: Text(
           "Past Medicines",
@@ -70,7 +70,7 @@ class _PastMedicinesState extends State<PastMedicines> {
                             BorderRadius.circular(12)),
                         depth: 8,
                         lightSource: LightSource.topLeft,
-                        color: Colors.white12),
+                        color: Colors.white54),
                     child: Container(
                       padding: EdgeInsets.all(10),
                       width: double.infinity,
