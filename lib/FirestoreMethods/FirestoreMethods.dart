@@ -1,0 +1,83 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:medlist/Providers/DataProvider.dart';
+import 'package:medlist/Providers/UserProvider.dart';
+import 'package:medlist/models/exercise_model.dart';
+import 'package:medlist/models/medicine_model.dart';
+import 'package:medlist/models/pastMedicine_model.dart';
+import 'package:provider/provider.dart';
+import '../models/user_model.dart';
+
+class FirestoreData {
+  //*********************Medicine Data
+  static medicinesData(BuildContext context) async {
+    var provider = Provider.of<DataProvider>(context, listen: false);
+    var snap = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc("HospitalName")
+        .collection("Patients")
+        .doc("uid1")
+        .collection("Medicines")
+        .get();
+    List<MedicineModel> list = [];
+    for (var queryDocumentSnapshot in snap.docs) {
+      Map<String, dynamic> data = queryDocumentSnapshot.data();
+      MedicineModel medicineModel = MedicineModel.fromJson(data);
+      list.add(medicineModel);
+    }
+    provider.medicinesListUpdate(list);
+  }
+
+  //******************User Data
+  static userData(BuildContext context) async {
+    var provider = Provider.of<UserProvider>(context, listen: false);
+    var snap = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc("HospitalName")
+        .collection("Patients")
+        .doc("uid1")
+        .get();
+    User _user = User.fromJson(snap.data() as Map<String, dynamic>);
+    provider.updateUser(_user);
+  }
+
+  //***************** Exercise Data
+  static exerciseData(BuildContext context) async {
+    var provider = Provider.of<DataProvider>(context, listen: false);
+    print("fetching");
+    var snap = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc("HospitalName")
+        .collection("Patients")
+        .doc("uid1")
+        .collection("Exercises")
+        .get();
+    List<ExerciseModel> list = [];
+    for (var queryDocumentSnapshot in snap.docs) {
+      Map<String, dynamic> data = queryDocumentSnapshot.data();
+      ExerciseModel exerciseModel = ExerciseModel.fromJson(data);
+      list.add(exerciseModel);
+    }
+    provider.exerciseListUpdate(list);
+  }
+
+  //***************** Past Medicine Data
+  static pastMedicineData(BuildContext context) async {
+    var provider = Provider.of<DataProvider>(context, listen: false);
+    print("fetching");
+    var snap = await FirebaseFirestore.instance
+        .collection('Users')
+        .doc("HospitalName")
+        .collection("Patients")
+        .doc("uid1")
+        .collection("PastMedicines")
+        .get();
+    List<PastMedicineModel> list = [];
+    for (var queryDocumentSnapshot in snap.docs) {
+      Map<String, dynamic> data = queryDocumentSnapshot.data();
+      PastMedicineModel pastMedicineModel = PastMedicineModel.fromJson(data);
+      list.add(pastMedicineModel);
+    }
+    provider.pastMedicineListUpdate(list);
+  }
+}

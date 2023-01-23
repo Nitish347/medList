@@ -1,8 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:medlist/FirestoreMethods/MedicineData.dart';
+import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
 import 'package:medlist/pages/auth/verify.dart';
+import 'package:provider/provider.dart';
+
+import '../../Providers/UserProvider.dart';
 
 class LoginPage extends StatelessWidget {
   static String id = "loginPage";
@@ -11,6 +14,7 @@ class LoginPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<UserProvider>(context, listen: false);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -116,8 +120,9 @@ class LoginPage extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(25.0),
                       child: InkWell(
-                        onTap: () {
-                          MedicineData.fetchData();
+                        onTap: () async {
+                          await FirestoreData.userData(context);
+                          print(provider.user?.phoneNumber);
                           // Navigator.push(
                           //     context,
                           //     MaterialPageRoute(
