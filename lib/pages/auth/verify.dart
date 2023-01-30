@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:medlist/FirestoreMethods/SaveUser.dart';
 import 'package:medlist/pages/home.dart';
 
 import 'login.dart';
@@ -10,6 +11,8 @@ import 'login.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 class VerifyPage extends StatefulWidget {
   static String id = "verifyPage";
+  String phoneNumber = "";
+  VerifyPage({required this.phoneNumber});
 
   @override
   _VerifyPageState createState() => _VerifyPageState();
@@ -29,7 +32,7 @@ class _VerifyPageState extends State<VerifyPage> {
   void initState() {
     // TODO: implement initState
 
-    verify();
+    verify(widget.phoneNumber);
   }
 
   @override
@@ -70,7 +73,7 @@ class _VerifyPageState extends State<VerifyPage> {
                     height: 10,
                   ),
                   Text(
-                    "Sent to +91 ${LoginPage.phoneNumber}",
+                    "Sent to +91 ${"phoneNumber"}",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
@@ -108,7 +111,7 @@ class _VerifyPageState extends State<VerifyPage> {
                   // SizedBox(height: height/25,),
                   InkWell(
                     onTap: () {
-                      verifycode();
+                      verifycode(otp);
                       // print(otp);
                       // print(LoginPage.phoneNumber);
                       // if (otp_visible == true) {
@@ -147,10 +150,10 @@ class _VerifyPageState extends State<VerifyPage> {
     );
   }
 
-  void verify() {
+  void verify(String PhoneNumber) {
     print(5);
     auth.verifyPhoneNumber(
-        phoneNumber: "+918840867665",
+        phoneNumber: "+91$PhoneNumber",
         verificationCompleted: (PhoneAuthCredential credential) async {
           await auth.signInWithCredential(credential).then((value) {
             print("login successfully");
@@ -169,15 +172,16 @@ class _VerifyPageState extends State<VerifyPage> {
     print("code sent");
   }
 
-  void verifycode() async {
+  void verifycode(String otp) async {
     print("nitish");
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verficationID_received, smsCode: "509266");
+        verificationId: verficationID_received, smsCode: otp);
     await auth.signInWithCredential(credential).then((value) async {
       final User? user = auth.currentUser;
       final uid = user?.uid;
       // await FirestoreMethods().uploadData(widget.user.toJson(), uid!);
       print("logged in successfully");
+      SaveUser.saveUser(context, uid!);
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => HomeScreen()));
     });

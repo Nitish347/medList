@@ -5,7 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 Widget drawer(BuildContext context) {
   var height = MediaQuery.of(context).size.height;
   return Drawer(
-    backgroundColor: Colors.white,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
+    ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -13,8 +15,8 @@ Widget drawer(BuildContext context) {
           decoration: BoxDecoration(
               color: Colors.blue.shade700,
               borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(20),
-                  bottomLeft: Radius.circular(20))),
+                  bottomRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(0))),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
@@ -32,7 +34,7 @@ Widget drawer(BuildContext context) {
                     )),
                 Text(
                   "Nitish Chuarasiya",
-                  style: GoogleFonts.poppins(
+                  style: GoogleFonts.alice(
                       fontSize: 20,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
@@ -197,7 +199,7 @@ Widget drawer(BuildContext context) {
           width: double.infinity,
         ),
         SizedBox(
-          height: 50,
+          height: 30,
         ),
         Center(
           child: InkWell(
@@ -206,7 +208,28 @@ Widget drawer(BuildContext context) {
               height: 40,
               width: 200,
               decoration: BoxDecoration(
-                  color: Colors.green, borderRadius: BorderRadius.circular(20)),
+                  color: Colors.teal, borderRadius: BorderRadius.circular(20)),
+              child: Center(
+                child: Text(
+                  "Book Appointment",
+                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 17),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Center(
+          child: InkWell(
+            onTap: () {},
+            child: Container(
+              height: 40,
+              width: 200,
+              decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.circular(20)),
               child: Center(
                 child: Text(
                   "Emergency Call",

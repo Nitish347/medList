@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:medlist/Providers/DataProvider.dart';
@@ -79,5 +81,21 @@ class FirestoreData {
       list.add(pastMedicineModel);
     }
     provider.pastMedicineListUpdate(list);
+  }
+
+  //*********************Medicine Data
+  static HospitalNamesList(BuildContext context) async {
+    var provider = Provider.of<UserProvider>(context, listen: false);
+    List<String> list = [];
+    final querySnap =
+        await FirebaseFirestore.instance.collection('HospitalNames').get();
+
+    for (var i = 0; i < querySnap.docs.length; i++) {
+      final data = querySnap.docs[i].id;
+      list.add(data);
+    }
+
+    print(list);
+    provider.updateHospitalNames(list);
   }
 }
