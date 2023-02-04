@@ -23,5 +23,11 @@ class SaveUser {
       "PhoneNumber": provider.UserPhoneNumber,
       "uid": uid
     });
+    await FirebaseFirestore.instance.collection("Users").doc(uid).set({
+      "Name": provider.UserName,
+      "HospitalName": provider.selectedHospital,
+      "PhoneNumber": provider.UserPhoneNumber,
+      "uid": uid
+    });
   }
 }

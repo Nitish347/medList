@@ -1,20 +1,32 @@
+import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
+import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
+import 'package:medlist/Hive/readHive.dart';
+import 'package:medlist/Hive/writeData.dart';
+import 'package:medlist/models/hospital_model.dart';
 import 'package:medlist/pages/DietPlanScreen.dart';
 import 'package:medlist/pages/ExerciseTimeScreen.dart';
 import 'package:medlist/pages/MedicineTimeScreen.dart';
 import 'package:medlist/pages/PastMedicines.dart';
 import 'package:medlist/pages/PastReport.dart';
 import 'package:medlist/widgets/drawer.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
+import '../Providers/UserProvider.dart';
 import '../constants/constants.dart';
 import '../widgets/grid.dart';
 
 class HomeScreen extends StatefulWidget {
+  String uid;
+  HomeScreen({required this.uid});
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -59,15 +71,48 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/lottie/medicines list.json',
     'assets/lottie/note.json',
   ];
+  final mybox = Hive.box('mybox');
+  @override
+  void initState() {
+    super.initState();
+    read();
+  }
+
+  void writeData() {
+    mybox.put(1, "sdfghjk");
+  }
+
+  HospitalModel hospitalModel = HospitalModel(
+      DrName: "null",
+      HospitalAddress: "null",
+      HospitalContact: "null",
+      HospitalName: "null");
+
+  void read() {
+    hospitalModel = ReadHive().hospitalRead();
+    print(hospitalModel.DrName);
+    print(hospitalModel.HospitalAddress);
+    print(hospitalModel.HospitalContact);
+  }
+
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var widht = MediaQuery.of(context).size.width;
-
+    var provider = Provider.of<UserProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
+        floatingActionButton: FloatingActionButton(onPressed: () {}),
         drawer: drawer(context),
         appBar: AppBar(
+          actions: [
+            IconButton(
+                onPressed: () async {
+                  await FirestoreData.hospitalData(context, widget.uid);
+                  WriteHive().hospitalWrite(provider.hospitalModel);
+                },
+                icon: Icon(CupertinoIcons.refresh))
+          ],
           toolbarHeight: 60,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(

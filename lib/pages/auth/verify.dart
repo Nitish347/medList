@@ -4,8 +4,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medlist/FirestoreMethods/SaveUser.dart';
+import 'package:medlist/Hive/writeData.dart';
 import 'package:medlist/pages/home.dart';
+import 'package:provider/provider.dart';
 
+import '../../Providers/UserProvider.dart';
 import 'login.dart';
 
 // import 'package:shared_preferences/shared_preferences.dart';
@@ -111,7 +114,7 @@ class _VerifyPageState extends State<VerifyPage> {
                   // SizedBox(height: height/25,),
                   InkWell(
                     onTap: () {
-                      verifycode(otp);
+                      verifycode(otp, context);
                       // print(otp);
                       // print(LoginPage.phoneNumber);
                       // if (otp_visible == true) {
@@ -172,7 +175,8 @@ class _VerifyPageState extends State<VerifyPage> {
     print("code sent");
   }
 
-  void verifycode(String otp) async {
+  void verifycode(String otp, BuildContext context) async {
+    var provider = Provider.of<UserProvider>(context, listen: false);
     print("nitish");
     PhoneAuthCredential credential = PhoneAuthProvider.credential(
         verificationId: verficationID_received, smsCode: otp);
@@ -182,8 +186,13 @@ class _VerifyPageState extends State<VerifyPage> {
       // await FirestoreMethods().uploadData(widget.user.toJson(), uid!);
       print("logged in successfully");
       SaveUser.saveUser(context, uid!);
+      WriteHive().hospitalWrite(provider.hospitalModel);
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => HomeScreen()));
+          context,
+          MaterialPageRoute(
+              builder: (context) => HomeScreen(
+                    uid: "MBD6ejDLY8eaPm1pFLWC9gNaD2E2",
+                  )));
     });
   }
 }

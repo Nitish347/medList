@@ -1,23 +1,23 @@
 class HospitalModel {
   String? HospitalName;
   String? DrName;
-  String? HospitalAdrress;
+  String? HospitalAddress;
   String? HospitalContact;
   HospitalModel(
       {this.HospitalName,
       this.DrName,
-      this.HospitalAdrress,
+      this.HospitalAddress,
       this.HospitalContact});
 
   factory HospitalModel.fromJson(Map<String, dynamic> json) => HospitalModel(
       DrName: json["DrName"],
-      HospitalAdrress: json["HospitalAdrress"],
+      HospitalAddress: json["HospitalAddress"],
       HospitalName: json["HospitalName"],
       HospitalContact: json["HospitalContact"]);
 
   Map<String, dynamic> toJson() => {
         "DrName": DrName,
-        "HospitalAdrress": HospitalAdrress,
+        "HospitalAddress": HospitalAddress,
         "HospitalName": HospitalName,
         "HospitalContact": HospitalContact,
       };

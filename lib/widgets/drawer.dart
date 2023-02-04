@@ -1,9 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
+import 'package:medlist/Providers/UserProvider.dart';
+import 'package:medlist/models/hospital_model.dart';
+import 'package:provider/provider.dart';
 
 Widget drawer(BuildContext context) {
   var height = MediaQuery.of(context).size.height;
+  var provider = Provider.of<UserProvider>(context, listen: false);
   return Drawer(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
@@ -91,7 +96,7 @@ Widget drawer(BuildContext context) {
               ),
               SizedBox(height: height * 0.005),
               Text(
-                "Shivika Tyagi",
+                provider.hospitalModel.DrName.toString(),
                 style: GoogleFonts.poppins(fontSize: 16),
               )
             ],
@@ -122,7 +127,7 @@ Widget drawer(BuildContext context) {
               ),
               SizedBox(height: height * 0.005),
               Text(
-                "Ajay Kumar Garag Engineering College",
+                provider.hospitalModel.HospitalName.toString(),
                 style: GoogleFonts.poppins(fontSize: 16),
               )
             ],
@@ -153,7 +158,7 @@ Widget drawer(BuildContext context) {
               ),
               SizedBox(height: height * 0.005),
               Text(
-                "Ghaziabad, Uttar Pradesh",
+                provider.hospitalModel.HospitalAddress.toString(),
                 style: GoogleFonts.poppins(fontSize: 16),
               )
             ],
@@ -184,7 +189,7 @@ Widget drawer(BuildContext context) {
               ),
               SizedBox(height: height * 0.005),
               Text(
-                "8840867665",
+                provider.hospitalModel.HospitalContact.toString(),
                 style: GoogleFonts.poppins(fontSize: 16),
               )
             ],
@@ -238,7 +243,7 @@ Widget drawer(BuildContext context) {
               ),
             ),
           ),
-        )
+        ),
       ],
     ),
   );

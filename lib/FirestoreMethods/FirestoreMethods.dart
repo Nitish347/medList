@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:medlist/Providers/DataProvider.dart';
 import 'package:medlist/Providers/UserProvider.dart';
 import 'package:medlist/models/exercise_model.dart';
+import 'package:medlist/models/hospital_model.dart';
 import 'package:medlist/models/medicine_model.dart';
 import 'package:medlist/models/pastMedicine_model.dart';
 import 'package:provider/provider.dart';
@@ -83,7 +84,22 @@ class FirestoreData {
     provider.pastMedicineListUpdate(list);
   }
 
-  //*********************Medicine Data
+  //***************** Hospital Data
+  static hospitalData(BuildContext context, String uid) async {
+    var provider = Provider.of<UserProvider>(context, listen: false);
+    print("fetching");
+    var snp =
+        await FirebaseFirestore.instance.collection("Users").doc(uid).get();
+    String hsptlName = snp.data()!["HospitalName"];
+    var snap = await FirebaseFirestore.instance
+        .collection('HospitalNames')
+        .doc(hsptlName)
+        .get();
+    HospitalModel hospitalModel = HospitalModel.fromJson(snap.data()!);
+    provider.updateHopital(hospitalModel);
+  }
+
+  //******************** Hospital Names List
   static HospitalNamesList(BuildContext context) async {
     var provider = Provider.of<UserProvider>(context, listen: false);
     List<String> list = [];

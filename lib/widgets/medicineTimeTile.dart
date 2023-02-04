@@ -90,7 +90,7 @@ class _MedicineTimeTileState extends State<MedicineTimeTile> {
                           onChanged: (value) => setState(() => status = value),
                         ),
                         Text(
-                          widget.timing,
+                          widget.timing.toString(),
                           style: GoogleFonts.poppins(
                             fontSize: 12,
                             color: widget.color,

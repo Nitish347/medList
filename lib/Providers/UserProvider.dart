@@ -4,7 +4,11 @@ import 'package:medlist/models/user_model.dart';
 
 class UserProvider with ChangeNotifier {
   User? user;
-  HospitalModel? hospitalModel;
+  HospitalModel hospitalModel = HospitalModel(
+      HospitalName: "null",
+      HospitalContact: "null",
+      HospitalAddress: "null",
+      DrName: "null");
   List<String> hospitalNames = [];
   String selectedHospital = 'Select Your Hospital';
   String UserName = 'Select Your Hospital';
