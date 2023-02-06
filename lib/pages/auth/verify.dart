@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:medlist/FirestoreMethods/SaveUser.dart';
 import 'package:medlist/Hive/writeData.dart';
+import 'package:medlist/db/sqflite.dart';
 import 'package:medlist/pages/home.dart';
 import 'package:provider/provider.dart';
 
@@ -186,7 +187,10 @@ class _VerifyPageState extends State<VerifyPage> {
       // await FirestoreMethods().uploadData(widget.user.toJson(), uid!);
       print("logged in successfully");
       SaveUser.saveUser(context, uid!);
-      WriteHive().hospitalWrite(provider.hospitalModel);
+      MedicineSave _alarmHelper = MedicineSave();
+      _alarmHelper.initializeDatabase().then((value) {
+        print("*******************ho gyaa");
+      });
       Navigator.push(
           context,
           MaterialPageRoute(

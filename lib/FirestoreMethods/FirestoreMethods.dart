@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:medlist/Providers/DataProvider.dart';
 import 'package:medlist/Providers/UserProvider.dart';
+import 'package:medlist/alarm_helper.dart';
+import 'package:medlist/db/sqflite.dart';
+import 'package:medlist/models/alarm_info.dart';
 import 'package:medlist/models/exercise_model.dart';
 import 'package:medlist/models/hospital_model.dart';
 import 'package:medlist/models/medicine_model.dart';
@@ -16,19 +19,27 @@ class FirestoreData {
   static medicinesData(BuildContext context) async {
     var provider = Provider.of<DataProvider>(context, listen: false);
     var snap = await FirebaseFirestore.instance
-        .collection('Users')
-        .doc("HospitalName")
-        .collection("Patients")
-        .doc("uid1")
+        .collection('HospitalNames')
+        .doc("Delhi Aims")
+        .collection("Users")
+        .doc("MBD6ejDLY8eaPm1pFLWC9gNaD2E2")
         .collection("Medicines")
         .get();
     List<MedicineModel> list = [];
-    for (var queryDocumentSnapshot in snap.docs) {
-      Map<String, dynamic> data = queryDocumentSnapshot.data();
-      MedicineModel medicineModel = MedicineModel.fromJson(data);
-      list.add(medicineModel);
+    print(snap.docs[0].data()["medicines"]);
+    // print(snap.docs[0].data()["medicines"]);
+    for (var data in snap.docs[0].data()["medicines"]) {
+      // Map<String, dynamic> data = queryDocumentSnapshot.data();
+      print(data);
+      MedicineModel medicineModel = MedicineModel.fromMap(data);
+      // AlarmInfo medicineModel = AlarmInfo.fromMap(data);
+      MedicineSave().insertAlarm(medicineModel, context);
+      // AlarmHelper().insertAlarm(medicineModel);
+      // list.add(medicineModel);
     }
-    provider.medicinesListUpdate(list);
+
+    // provider.medicinesListUpdate(list);
+    print(list);
   }
 
   //******************User Data

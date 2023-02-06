@@ -15,7 +15,7 @@ class AlarmInfo {
   factory AlarmInfo.fromMap(Map<String, dynamic> json) => AlarmInfo(
         id: json["id"],
         title: json["title"],
-        alarmDateTime: DateTime.parse(json["alarmDateTime"]),
+        alarmDateTime: DateTime.now(),
         isPending: json["isPending"],
         gradientColorIndex: json["gradientColorIndex"],
       );

@@ -1,15 +1,39 @@
+import 'package:intl/intl.dart';
+
 class MedicineModel {
-  String? name;
-  DateTime? time;
-  String? picUrl;
-  MedicineModel({this.name, this.picUrl, this.time});
+  int? id;
+  String? title;
+  DateTime? alarmDateTime;
+  bool? isPending;
+  int? gradientColorIndex;
 
-  factory MedicineModel.fromJson(Map<String, dynamic> json) => MedicineModel(
-      name: json["name"], picUrl: json["picUrl"], time: json["time"].toDate());
+  MedicineModel(
+      {this.id,
+      this.title,
+      this.alarmDateTime,
+      this.isPending,
+      this.gradientColorIndex});
 
-  Map<String, dynamic> toJson() => {
-        "name": name,
-        "picUrl": picUrl,
-        "time": time?.toIso8601String(),
+  factory MedicineModel.fromMap(Map<String, dynamic> json) => MedicineModel(
+        id: json["id"],
+        title: json["title"],
+        alarmDateTime:
+            DateTime.parse(json["alarmDateTime"].toDate().toString()),
+        isPending: json["isPending"],
+        gradientColorIndex: json["gradientColorIndex"],
+      );
+  factory MedicineModel.fromMap1(Map<String, dynamic> json) => MedicineModel(
+        id: json["id"],
+        title: json["title"],
+        alarmDateTime: DateTime.parse(json["alarmDateTime"]),
+        isPending: json["isPending"],
+        gradientColorIndex: json["gradientColorIndex"],
+      );
+  Map<String, dynamic> toMap() => {
+        "id": id,
+        "title": title,
+        "alarmDateTime": alarmDateTime!.toIso8601String(),
+        "isPending": isPending,
+        "gradientColorIndex": gradientColorIndex,
       };
 }

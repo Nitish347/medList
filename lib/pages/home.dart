@@ -9,12 +9,16 @@ import 'package:lottie/lottie.dart';
 import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
 import 'package:medlist/Hive/readHive.dart';
 import 'package:medlist/Hive/writeData.dart';
+import 'package:medlist/Providers/DataProvider.dart';
+import 'package:medlist/alarm_helper.dart';
+import 'package:medlist/db/sqflite.dart';
 import 'package:medlist/models/hospital_model.dart';
 import 'package:medlist/pages/DietPlanScreen.dart';
 import 'package:medlist/pages/ExerciseTimeScreen.dart';
 import 'package:medlist/pages/MedicineTimeScreen.dart';
 import 'package:medlist/pages/PastMedicines.dart';
 import 'package:medlist/pages/PastReport.dart';
+import 'package:medlist/setAlarm.dart';
 import 'package:medlist/widgets/drawer.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -71,28 +75,16 @@ class _HomeScreenState extends State<HomeScreen> {
     'assets/lottie/medicines list.json',
     'assets/lottie/note.json',
   ];
-  final mybox = Hive.box('mybox');
+  AlarmHelper _alarmHelper = AlarmHelper();
+
   @override
   void initState() {
     super.initState();
-    read();
-  }
 
-  void writeData() {
-    mybox.put(1, "sdfghjk");
-  }
+    MedicineSave().getAlarms(context);
 
-  HospitalModel hospitalModel = HospitalModel(
-      DrName: "null",
-      HospitalAddress: "null",
-      HospitalContact: "null",
-      HospitalName: "null");
-
-  void read() {
-    hospitalModel = ReadHive().hospitalRead();
-    print(hospitalModel.DrName);
-    print(hospitalModel.HospitalAddress);
-    print(hospitalModel.HospitalContact);
+    // read();
+    // FirestoreData.medicinesData(context);
   }
 
   @override
@@ -100,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
     var height = MediaQuery.of(context).size.height;
     var widht = MediaQuery.of(context).size.width;
     var provider = Provider.of<UserProvider>(context, listen: false);
+    var provider1 = Provider.of<DataProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(onPressed: () {}),
@@ -108,8 +101,20 @@ class _HomeScreenState extends State<HomeScreen> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  await FirestoreData.hospitalData(context, widget.uid);
-                  WriteHive().hospitalWrite(provider.hospitalModel);
+                  // await MedicineSave().deleteAll(provider1.medicinesList!);
+                  await FirestoreData.medicinesData(context);
+                  await MedicineSave().getAlarms(context);
+                  var list = provider1.medicinesList!;
+                  for (int i = 0; i < list.length; i++) {
+                    SetAlarm().onSaveAlarm(
+                        false,
+                        provider1.medicinesList![i].alarmDateTime!,
+                        provider1.medicinesList![i]);
+                  }
+
+                  // MedicineSave medicineSave = MedicineSave();
+                  // medicineSave.getAlarms(context);
+                  // await FirestoreData.hospitalData(context, widget.uid);
                 },
                 icon: Icon(CupertinoIcons.refresh))
           ],
