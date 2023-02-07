@@ -25,7 +25,7 @@ class MedicineTimeTile extends StatefulWidget {
 }
 
 class _MedicineTimeTileState extends State<MedicineTimeTile> {
-  bool status = false;
+  bool status = true;
 
   List<String> medicines = [
     "Paracetamol",
@@ -87,7 +87,10 @@ class _MedicineTimeTileState extends State<MedicineTimeTile> {
                           thumbColor: widget.thumbColor,
                           trackColor: widget.trackColor,
                           value: status,
-                          onChanged: (value) => setState(() => status = value),
+                          onChanged: (value) => setState(() {
+                            status = value;
+                            print(widget.title);
+                          }),
                         ),
                         Text(
                           widget.timing.toString(),

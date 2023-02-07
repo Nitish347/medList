@@ -1,12 +1,14 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
 import 'package:medlist/Providers/UserProvider.dart';
 import 'package:medlist/models/hospital_model.dart';
+import 'package:medlist/pages/auth/login.dart';
 import 'package:provider/provider.dart';
 
-Widget drawer(BuildContext context) {
+Widget drawer(BuildContext context, String name) {
   var height = MediaQuery.of(context).size.height;
   var provider = Provider.of<UserProvider>(context, listen: false);
   return Drawer(
@@ -25,7 +27,7 @@ Widget drawer(BuildContext context) {
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 CircleAvatar(
                     radius: 40,
@@ -37,10 +39,13 @@ Widget drawer(BuildContext context) {
                               fit: BoxFit.fill),
                           borderRadius: BorderRadius.circular(40)),
                     )),
+                SizedBox(
+                  width: 10,
+                ),
                 Text(
-                  "Nitish Chuarasiya",
+                  name,
                   style: GoogleFonts.alice(
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.w500,
                       color: Colors.white),
                 ),
@@ -233,11 +238,36 @@ Widget drawer(BuildContext context) {
               height: 40,
               width: 200,
               decoration: BoxDecoration(
-                  color: Colors.redAccent,
+                  color: Colors.indigo,
                   borderRadius: BorderRadius.circular(20)),
               child: Center(
                 child: Text(
                   "Emergency Call",
+                  style: GoogleFonts.poppins(color: Colors.white, fontSize: 17),
+                ),
+              ),
+            ),
+          ),
+        ),
+        SizedBox(
+          height: 20,
+        ),
+        Center(
+          child: InkWell(
+            onTap: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => LoginPage()));
+            },
+            child: Container(
+              height: 40,
+              width: 200,
+              decoration: BoxDecoration(
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.circular(20)),
+              child: Center(
+                child: Text(
+                  "LogOut",
                   style: GoogleFonts.poppins(color: Colors.white, fontSize: 17),
                 ),
               ),

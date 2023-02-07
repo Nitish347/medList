@@ -8,17 +8,17 @@ class User {
   User({this.picUrl, this.name, this.phoneNumber, this.uid, this.hospitalName});
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-      name: json["name"],
+      name: json["Name"],
       picUrl: json["picUrl"],
       uid: json["uid"],
-      hospitalName: json["hospitalName"],
-      phoneNumber: json["phoneNumber"]);
+      hospitalName: json["HospitalName"],
+      phoneNumber: json["PhoneNumber"]);
 
   Map<String, dynamic> toJson() => {
-        "name": name,
+        "Name": name,
         "uid": uid,
         "picUrl": picUrl,
-        "hospitalName": hospitalName,
-        "phoneNumber": phoneNumber,
+        "HospitalName": hospitalName,
+        "PhoneNumber": phoneNumber,
       };
 }

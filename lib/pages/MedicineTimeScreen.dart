@@ -104,54 +104,52 @@ class _MedicineTimeScreenState extends State<MedicineTimeScreen> {
     var height = MediaQuery.of(context).size.height;
     var widht = MediaQuery.of(context).size.width;
     var provider = Provider.of<DataProvider>(context, listen: false);
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 60,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-          ),
-          backgroundColor: Colors.blue.shade700,
-          centerTitle: true,
-          title: Text(
-            "Medicine Time",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w400,
-                fontSize: 25,
-                color: Colors.white,
-                shadows: [BoxShadow(color: Colors.black, blurRadius: 5)]),
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 60,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            bottom: Radius.circular(30),
           ),
         ),
-        backgroundColor: Colors.white,
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                height: height / 4,
-                child: Lottie.asset("assets/lottie/medicine.json"),
-              ),
-              Container(
-                decoration: BoxDecoration(),
-                child: Column(
-                    children:
-                        List.generate(provider.medicinesList!.length, (index) {
-                  return MedicineTimeTile(
-                      trackColor: Colors.grey,
-                      thumbColor: Colors.blue.shade700,
-                      activeColor: Colors.blue.withOpacity(0.5),
-                      color: Colors.blue.shade700,
-                      index: index,
-                      title: provider.medicinesList![index].title!,
-                      timing: DateFormat.jm()
-                          .format(provider.medicinesList![index].alarmDateTime!)
-                          .toString());
-                })),
-              ),
-            ],
-          ),
+        backgroundColor: Colors.blue.shade700,
+        centerTitle: true,
+        title: Text(
+          "Medicine Time",
+          style: GoogleFonts.poppins(
+              fontWeight: FontWeight.w400,
+              fontSize: 25,
+              color: Colors.white,
+              shadows: [BoxShadow(color: Colors.black, blurRadius: 5)]),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: height / 4,
+              child: Lottie.asset("assets/lottie/medicine.json"),
+            ),
+            Container(
+              decoration: BoxDecoration(),
+              child: Column(
+                  children:
+                      List.generate(provider.medicinesList!.length, (index) {
+                return MedicineTimeTile(
+                    trackColor: Colors.grey,
+                    thumbColor: Colors.blue.shade700,
+                    activeColor: Colors.blue.withOpacity(0.5),
+                    color: Colors.blue.shade700,
+                    index: index,
+                    title: provider.medicinesList![index].title!,
+                    timing: DateFormat.jm()
+                        .format(provider.medicinesList![index].alarmDateTime!)
+                        .toString());
+              })),
+            ),
+          ],
         ),
       ),
     );

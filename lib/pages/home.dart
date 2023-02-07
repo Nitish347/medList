@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -26,6 +27,7 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../Providers/UserProvider.dart';
 import '../constants/constants.dart';
+import '../setAlarmExercise.dart';
 import '../widgets/grid.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -80,11 +82,32 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    // _alarmHelper.initializeDatabase().then((value) {
+    //   print("*******************ho gyaa");
+    // });
 
-    MedicineSave().getAlarms(context);
-
+    // MedicineSave().getAlarms(context);
+    loading();
     // read();
-    // FirestoreData.medicinesData(context);
+  }
+
+  String nameUser = "";
+
+  void loading() async {
+    await FirestoreData.userData(context, widget.uid);
+
+    var namee = await FirebaseFirestore.instance
+        .collection("Users")
+        .doc(widget.uid)
+        .get();
+    setState(() {
+      nameUser = namee["Name"];
+    });
+
+    await FirestoreData.hospitalData(context, widget.uid);
+    await FirestoreData.medicinesData(context, widget.uid);
+    await FirestoreData.exerciseData(context, widget.uid);
+    await FirestoreData.dietPlan(context, widget.uid);
   }
 
   @override
@@ -96,25 +119,32 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: FloatingActionButton(onPressed: () {}),
-        drawer: drawer(context),
+        drawer: drawer(context, nameUser),
         appBar: AppBar(
           actions: [
             IconButton(
                 onPressed: () async {
-                  // await MedicineSave().deleteAll(provider1.medicinesList!);
-                  await FirestoreData.medicinesData(context);
-                  await MedicineSave().getAlarms(context);
+                  SetAlarm().cancelAllNoti();
+                  FirestoreData.dietPlan(context, widget.uid);
+                  await FirestoreData.hospitalData(context, widget.uid);
+                  // await MedicineSave().deleteAll(context);
+                  await FirestoreData.medicinesData(context, widget.uid);
+                  await FirestoreData.exerciseData(context, widget.uid);
+                  // await MedicineSave().getAlarms(context);
                   var list = provider1.medicinesList!;
+                  var list1 = provider1.exerciseList!;
                   for (int i = 0; i < list.length; i++) {
                     SetAlarm().onSaveAlarm(
                         false,
                         provider1.medicinesList![i].alarmDateTime!,
                         provider1.medicinesList![i]);
                   }
-
-                  // MedicineSave medicineSave = MedicineSave();
-                  // medicineSave.getAlarms(context);
-                  // await FirestoreData.hospitalData(context, widget.uid);
+                  for (int i = 0; i < list1.length; i++) {
+                    SetAlarm1().onSaveAlarm(
+                        false,
+                        provider1.exerciseList![i].alarmDateTime!,
+                        provider1.exerciseList![i]);
+                  }
                 },
                 icon: Icon(CupertinoIcons.refresh))
           ],
@@ -163,11 +193,13 @@ class _HomeScreenState extends State<HomeScreen> {
                         child: Container(
                           width: 280,
                           decoration: BoxDecoration(
-                              // image: DecorationImage(
-                              //     image: AssetImage("assets/slider.png"),
-                              //     fit: BoxFit.fill),
+                              // boxShadow: Constants.neumorphic2,
+                              image: DecorationImage(
+                                  image:
+                                      AssetImage("assets/images/medicine.jpg"),
+                                  fit: BoxFit.fill),
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.grey),
+                              color: Colors.white),
                         ),
                       );
                     },

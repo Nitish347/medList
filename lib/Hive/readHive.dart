@@ -15,4 +15,9 @@ class ReadHive {
 
     return hospitalModel;
   }
+  //
+  // void loggedInStatus() {
+  //   String data = mybox.get("logged");
+  //   if (data != null) print(data);
+  // }
 }

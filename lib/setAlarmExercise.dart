@@ -2,14 +2,15 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:medlist/models/exercise_model.dart';
 import 'package:medlist/models/medicine_model.dart';
 
 import 'main.dart';
 import 'models/alarm_info.dart';
 import 'package:http/http.dart' as http;
 
-class SetAlarm {
-  void ScheduleAlarm(DateTime scheduleAlarmDateTime, MedicineModel alarmInfo,
+class SetAlarm1 {
+  void ScheduleAlarm(DateTime scheduleAlarmDateTime, ExerciseModel alarmInfo,
       {required bool isRepeating}) async {
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         const AndroidNotificationDetails(
@@ -18,8 +19,7 @@ class SetAlarm {
       priority: Priority.max,
       importance: Importance.max,
       playSound: true,
-      styleInformation: BigPictureStyleInformation(
-          FilePathAndroidBitmap("assets/images/medlist.png")),
+      // sound: RawResourceAndroidNotificationSound('a_long_cold_string'),
     );
 
     var platformChannelSpecifics = NotificationDetails(
@@ -29,7 +29,7 @@ class SetAlarm {
     print(scheduleAlarmDateTime);
     await flutterLocalNotificationsPlugin.schedule(
         alarmInfo.id!,
-        "Medicine Name : ",
+        "Exercise Name : ",
         alarmInfo.title,
         scheduleAlarmDateTime,
         platformChannelSpecifics);
@@ -37,7 +37,7 @@ class SetAlarm {
 
   //**********************************************************************************************
 
-  void onSaveAlarm(bool _isRepeating, DateTime time, MedicineModel alarmInfo) {
+  void onSaveAlarm(bool _isRepeating, DateTime time, ExerciseModel alarmInfo) {
     DateTime? scheduleAlarmDateTime;
     if (time.isAfter(DateTime.now()))
       scheduleAlarmDateTime = time;
@@ -59,11 +59,12 @@ class SetAlarm {
   void cancelAllNoti() async {
     await flutterLocalNotificationsPlugin.cancelAll();
   }
-  //**********************************************************************************
-  // void loadAlarms(BuildContext context) {
-  //   // _alarms = MedicineSave().getAlarms(context);
-  //   // print(_alarms![0]);
-  //   if (mounted) setState(() {});
-  // }
+
+//**********************************************************************************
+// void loadAlarms(BuildContext context) {
+//   // _alarms = MedicineSave().getAlarms(context);
+//   // print(_alarms![0]);
+//   if (mounted) setState(() {});
+// }
 
 }

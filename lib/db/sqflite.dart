@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:medlist/Providers/DataProvider.dart';
+import 'package:medlist/models/exercise_model.dart';
 import 'package:medlist/models/medicine_model.dart';
 import 'package:provider/provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -47,11 +48,14 @@ class MedicineSave {
   }
 
   void insertAlarm(MedicineModel medicineModel, BuildContext context) async {
-    var provider = Provider.of<DataProvider>(context, listen: false);
+    // var provider = Provider.of<DataProvider>(context, listen: false);
     var db = await this.database;
-    for (int i = 0; i < provider.medicinesList!.length; i++) {
-      delete(provider.medicinesList![i].id);
-    }
+    // for (int i = 0; i < provider.medicinesList!.length; i++) {
+    //   delete(provider.medicinesList![i].id);
+    // }
+    // for (int i = 0; i < provider.exerciseList!.length; i++) {
+    //   delete(provider.exerciseList![i].id);
+    // }
     print("inseritng...........................................");
     var result = await db.insert(tableAlarm, medicineModel.toMap());
     print('result : $result');
@@ -61,6 +65,8 @@ class MedicineSave {
     print("fetching data from db******************************");
     var provider = Provider.of<DataProvider>(context, listen: false);
     List<MedicineModel> _alarms = [];
+    List<MedicineModel> _alarms1 = [];
+    List<ExerciseModel> _alarms2 = [];
 
     var db = await this.database;
     var result = await db.query(tableAlarm);
@@ -68,16 +74,28 @@ class MedicineSave {
       var alarmInfo = MedicineModel.fromMap1(element);
       _alarms.add(alarmInfo);
     });
-    print(_alarms);
-    provider.medicinesListUpdate(_alarms);
-
+    // print(_alarms);
+    for (var i in _alarms) {
+      if (i.id! < 1000) {
+        _alarms1.add(i);
+      } else {
+        Map<String, dynamic> mp = i.toMap();
+        _alarms2.add(ExerciseModel.fromMap1(mp));
+      }
+    }
+    provider.medicinesListUpdate(_alarms1);
+    provider.exerciseListUpdate(_alarms2);
     return _alarms;
   }
 
-  Future<void> deleteAll(List<MedicineModel> _alarms) async {
+  Future<void> deleteAll(BuildContext context) async {
     print("deleting..........................");
-    for (int i = 0; i < _alarms.length; i++) {
-      delete(_alarms[i].id);
+    var provider = Provider.of<DataProvider>(context, listen: false);
+    for (int i = 0; i < provider.medicinesList!.length; i++) {
+      delete(provider.medicinesList![i].id);
+    }
+    for (int i = 0; i < provider.exerciseList!.length; i++) {
+      delete(provider.exerciseList![i].id);
     }
   }
 

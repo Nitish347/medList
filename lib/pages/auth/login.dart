@@ -174,16 +174,13 @@ class _LoginPageState extends State<LoginPage> {
                             onTap: () {
                               provider.UserName = name;
                               provider.UserPhoneNumber = phoneNumber;
-
-                              // await FirestoreData.HospitalNamesList(context);
-                              // print(provider.hospitalNames);
-                              // print(LoginPage().selectedHospital);
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => VerifyPage(
-                                            phoneNumber: phoneNumber,
-                                          )));
+                              if (name != "" && phoneNumber != "")
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => VerifyPage(
+                                              phoneNumber: phoneNumber,
+                                            )));
                             },
                             child: Container(
                               height: 60,

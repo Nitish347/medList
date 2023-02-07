@@ -77,7 +77,7 @@ class _VerifyPageState extends State<VerifyPage> {
                     height: 10,
                   ),
                   Text(
-                    "Sent to +91 ${"phoneNumber"}",
+                    "Sent to +91 ${widget.phoneNumber}",
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w400,
@@ -195,7 +195,7 @@ class _VerifyPageState extends State<VerifyPage> {
           context,
           MaterialPageRoute(
               builder: (context) => HomeScreen(
-                    uid: "MBD6ejDLY8eaPm1pFLWC9gNaD2E2",
+                    uid: uid,
                   )));
     });
   }
