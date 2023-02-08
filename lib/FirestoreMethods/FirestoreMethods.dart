@@ -67,7 +67,7 @@ class FirestoreData {
     List<ExerciseModel> list = [];
     // print(snap.docs[0].data()["exercises"]);
     // print(snap.docs[0].data()["medicines"]);
-    for (var data in snap.docs[0].data()["exercises"]) {
+    for (var data in snap.docs[0].data()["exercise"]) {
       // print(data);
       MedicineModel medicineModel = MedicineModel.fromMap(data);
       ExerciseModel exerciseModel = ExerciseModel.fromMap(data);
@@ -129,7 +129,7 @@ class FirestoreData {
     provider.updateHospitalNames(list);
   }
 
-  //***************** Exercise Data
+  //***************** Diet Data
   static dietPlan(BuildContext context, String uid) async {
     var provider = Provider.of<DataProvider>(context, listen: false);
     var provider1 = Provider.of<UserProvider>(context, listen: false);

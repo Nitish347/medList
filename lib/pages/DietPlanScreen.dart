@@ -121,30 +121,30 @@ class _DietPlanScreenState extends State<DietPlanScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        for (int i = 0;
-                            i < provider.dietPlan!.notEat!.length;
-                            i++)
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            alignment: Alignment.centerLeft,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "${i + 1}.",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  provider.dietPlan!.notEat![i],
-                                  style: TextStyle(fontSize: 17),
-                                )
-                              ],
-                            ),
-                          )
+                        // for (int i = 0;
+                        //     i < provider.dietPlan!.notEat!.length;
+                        //     i++)
+                        //   Container(
+                        //     padding: EdgeInsets.all(10),
+                        //     alignment: Alignment.centerLeft,
+                        //     child: Row(
+                        //       children: [
+                        //         Text(
+                        //           "${i + 1}.",
+                        //           style: TextStyle(
+                        //               fontSize: 19,
+                        //               fontWeight: FontWeight.w500),
+                        //         ),
+                        //         SizedBox(
+                        //           width: 10,
+                        //         ),
+                        //         Text(
+                        //           provider.dietPlan!.notEat![i],
+                        //           style: TextStyle(fontSize: 17),
+                        //         )
+                        //       ],
+                        //     ),
+                        //   )
                       ],
                     ),
                   )),

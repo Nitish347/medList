@@ -213,7 +213,14 @@ Widget drawer(BuildContext context, String name) {
         ),
         Center(
           child: InkWell(
-            onTap: () {},
+            onTap: () async {
+              DateTime? pickedDate = await showDatePicker(
+                  context: context,
+                  initialDate: DateTime.now(),
+                  firstDate: DateTime(1950),
+                  //DateTime.now() - not to allow to choose before today.
+                  lastDate: DateTime(2100));
+            },
             child: Container(
               height: 40,
               width: 200,

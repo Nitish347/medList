@@ -17,8 +17,7 @@ class ExerciseModel {
   factory ExerciseModel.fromMap(Map<String, dynamic> json) => ExerciseModel(
         id: json["id"],
         title: json["title"],
-        alarmDateTime:
-            DateTime.parse(json["alarmDateTime"].toDate().toString()),
+        alarmDateTime: DateTime.parse(json["alarmDateTime"]),
         isPending: json["isPending"],
         gradientColorIndex: json["gradientColorIndex"],
       );

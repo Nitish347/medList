@@ -6,6 +6,7 @@ import '../widgets/grid.dart';
 class PastReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<String> li = ["X-Ray", "Blood Test", "M.R.I.", "Liver Test"];
     var height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
@@ -59,9 +60,9 @@ class PastReport extends StatelessWidget {
                       scrollDirection: Axis.vertical,
                       physics: ClampingScrollPhysics(),
                       children: [
-                        for (int i = 0; i < 10; i++)
+                        for (int i = 0; i < 4; i++)
                           grid(
-                            branch: "Report",
+                            branch: li[i],
                             images: "assets/lottie/note.json",
                             // onTap: () => checkOption(i),
                             // selected: i + 1 == optionSelected,

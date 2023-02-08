@@ -14,6 +14,16 @@ import 'package:medlist/pages/optionScreen.dart';
 import 'package:provider/provider.dart';
 
 import 'Notifications/noti.dart';
+import 'package:flutter/material.dart';
+
+import 'ChatMessagesModel.dart';
+import 'global_members.dart';
+import 'widgets/sender_row_view.dart';
+
+var url =
+    'https://i.pinimg.com/736x/fd/6e/04/fd6e04548095d7f767917f344a904ff1.jpg';
+var urlTwo =
+    'https://sguru.org/wp-content/uploads/2017/03/cute-n-stylish-boys-fb-dp-2016.jpg';
 
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();

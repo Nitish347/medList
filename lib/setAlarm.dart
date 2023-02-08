@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:medlist/models/exercise_model.dart';
 import 'package:medlist/models/medicine_model.dart';
 
 import 'main.dart';
@@ -18,8 +19,7 @@ class SetAlarm {
       priority: Priority.max,
       importance: Importance.max,
       playSound: true,
-      styleInformation: BigPictureStyleInformation(
-          FilePathAndroidBitmap("assets/images/medlist.png")),
+      // sound: RawResourceAndroidNotificationSound('a_long_cold_string'),
     );
 
     var platformChannelSpecifics = NotificationDetails(
@@ -29,7 +29,7 @@ class SetAlarm {
     print(scheduleAlarmDateTime);
     await flutterLocalNotificationsPlugin.schedule(
         alarmInfo.id!,
-        "Medicine Name : ",
+        "Exercise Name : ",
         alarmInfo.title,
         scheduleAlarmDateTime,
         platformChannelSpecifics);
@@ -59,11 +59,12 @@ class SetAlarm {
   void cancelAllNoti() async {
     await flutterLocalNotificationsPlugin.cancelAll();
   }
-  //**********************************************************************************
-  // void loadAlarms(BuildContext context) {
-  //   // _alarms = MedicineSave().getAlarms(context);
-  //   // print(_alarms![0]);
-  //   if (mounted) setState(() {});
-  // }
+
+//**********************************************************************************
+// void loadAlarms(BuildContext context) {
+//   // _alarms = MedicineSave().getAlarms(context);
+//   // print(_alarms![0]);
+//   if (mounted) setState(() {});
+// }
 
 }

@@ -26,6 +26,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../Providers/UserProvider.dart';
+import '../chat.dart';
 import '../constants/constants.dart';
 import '../setAlarmExercise.dart';
 import '../widgets/grid.dart';
@@ -118,7 +119,14 @@ class _HomeScreenState extends State<HomeScreen> {
     var provider1 = Provider.of<DataProvider>(context, listen: false);
     return SafeArea(
       child: Scaffold(
-        floatingActionButton: FloatingActionButton(onPressed: () {}),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            print("object");
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => MyChatUI()));
+          },
+          child: Icon(Icons.chat),
+        ),
         drawer: drawer(context, nameUser),
         appBar: AppBar(
           actions: [
