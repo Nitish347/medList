@@ -1,9 +1,12 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:avatar_glow/avatar_glow.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
@@ -46,20 +49,16 @@ class _HomeScreenState extends State<HomeScreen> {
     print(index);
     switch (index) {
       case 0:
-        Navigator.push(context,
-            CupertinoPageRoute(builder: (context) => MedicineTimeScreen()));
+        Navigator.push(context, CupertinoPageRoute(builder: (context) => MedicineTimeScreen()));
         break;
       case 1:
-        Navigator.push(context,
-            CupertinoPageRoute(builder: (context) => ExerciseTimeScreen()));
+        Navigator.push(context, CupertinoPageRoute(builder: (context) => ExerciseTimeScreen()));
         break;
       case 4:
-        Navigator.push(
-            context, CupertinoPageRoute(builder: (context) => PastMedicines()));
+        Navigator.push(context, CupertinoPageRoute(builder: (context) => PastMedicines()));
         break;
       case 5:
-        Navigator.push(
-            context, CupertinoPageRoute(builder: (context) => PastReport()));
+        Navigator.push(context, CupertinoPageRoute(builder: (context) => PastReport()));
         break;
     }
   }
@@ -67,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
   List<String> name = [
     'Medicines Time',
     'Exercise time',
-    'Diet PLan',
+    'Diet\nPLan',
     'Past Medicines',
     '  Past Report'
   ];
@@ -88,19 +87,42 @@ class _HomeScreenState extends State<HomeScreen> {
     // });
 
     // MedicineSave().getAlarms(context);
+    super.initState();
+    _remainingSeconds = 200;
+    _startTimer(4000);
     loading();
     // read();
   }
 
+  void _calculateTime(int totalSeconds) {
+    _remainingHours = totalSeconds ~/ 3600;
+    _remainingMinutes = (totalSeconds % 3600) ~/ 60;
+    _remainingSeconds = totalSeconds % 60;
+  }
+
+  void _startTimer(int sec) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (sec > 0) {
+        setState(() {
+          sec--;
+          _calculateTime(sec);
+        });
+      } else {
+        _timer.cancel(); // Stop the timer when countdown reaches 0
+      }
+    });
+  }
+
+  late Timer _timer;
+  int _remainingHours = 0;
+  int _remainingMinutes = 0;
+  int _remainingSeconds = 0;
   String nameUser = "";
 
   void loading() async {
     await FirestoreData.userData(context, widget.uid);
 
-    var namee = await FirebaseFirestore.instance
-        .collection("Users")
-        .doc(widget.uid)
-        .get();
+    var namee = await FirebaseFirestore.instance.collection("Users").doc(widget.uid).get();
     setState(() {
       nameUser = namee["Name"];
     });
@@ -122,13 +144,17 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             print("object");
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => MyChatUI()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => MyChatUI()));
           },
           child: Icon(Icons.chat),
         ),
         drawer: drawer(context, nameUser),
         appBar: AppBar(
+          leading: Icon(
+            Icons.menu,
+            color: green1,
+            size: height * 0.035,
+          ),
           actions: [
             IconButton(
                 onPressed: () async {
@@ -142,165 +168,300 @@ class _HomeScreenState extends State<HomeScreen> {
                   var list = provider1.medicinesList!;
                   var list1 = provider1.exerciseList!;
                   for (int i = 0; i < list.length; i++) {
-                    SetAlarm().onSaveAlarm(
-                        false,
-                        provider1.medicinesList![i].alarmDateTime!,
+                    SetAlarm().onSaveAlarm(false, provider1.medicinesList![i].alarmDateTime!,
                         provider1.medicinesList![i]);
                   }
                   for (int i = 0; i < list1.length; i++) {
-                    SetAlarm1().onSaveAlarm(
-                        false,
-                        provider1.exerciseList![i].alarmDateTime!,
+                    SetAlarm1().onSaveAlarm(false, provider1.exerciseList![i].alarmDateTime!,
                         provider1.exerciseList![i]);
                   }
                 },
-                icon: Icon(CupertinoIcons.refresh))
+                icon: Icon(
+                  CupertinoIcons.refresh,
+                  color: green1,
+                ))
           ],
-          toolbarHeight: 60,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-          ),
-          backgroundColor: Colors.blue.shade700,
+          toolbarHeight: height * 0.06,
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.vertical(
+          //     bottom: Radius.circular(30),
+          //   ),
+          // ),
+          backgroundColor: Colors.white,
+          shadowColor: Colors.white,
+          elevation: 0,
           centerTitle: true,
-          title: Text(
-            "MedList",
-            style: GoogleFonts.poppins(
-                fontWeight: FontWeight.w400,
-                fontSize: 25,
-                color: Colors.white,
-                shadows: [BoxShadow(color: Colors.black, blurRadius: 5)]),
-          ),
+          // title: Text(
+          //   "Med-List",
+          //   style: GoogleFonts.poppins(
+          //     fontWeight: FontWeight.w400,
+          //     fontSize: height * 0.03,
+          //     color: green1,
+          //   ),
+          // ),
         ),
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: height / 50,
-              ),
-              CarouselSlider(
-                options: CarouselOptions(
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        activeIndex_Carousal = index;
-                      });
-                    },
-                    disableCenter: true,
-                    initialPage: 0,
-                    height: 160.0,
-                    autoPlay: true,
-                    autoPlayInterval: Duration(seconds: 3)),
-                items: [1, 2, 3, 4, 5].map((i) {
-                  return Builder(
-                    builder: (BuildContext context) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8),
-                        child: Container(
-                          width: 280,
-                          decoration: BoxDecoration(
-                              // boxShadow: Constants.neumorphic2,
-                              image: DecorationImage(
-                                  image:
-                                      AssetImage("assets/images/medicine.jpg"),
-                                  fit: BoxFit.fill),
-                              borderRadius: BorderRadius.circular(10),
-                              color: Colors.white),
-                        ),
-                      );
-                    },
-                  );
-                }).toList(),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              buildIndicator(),
-              SizedBox(
-                height: height / 50,
-              ),
-              Container(
-                margin: EdgeInsets.all(20),
-                // color: Colors.grey,
-                child: Column(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: widht * 0.03),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // CarouselSlider(
+                //   options: CarouselOptions(
+                //       onPageChanged: (index, reason) {
+                //         setState(() {
+                //           activeIndex_Carousal = index;
+                //         });
+                //       },
+                //       disableCenter: true,
+                //       initialPage: 0,
+                //       height: 160.0,
+                //       autoPlay: true,
+                //       autoPlayInterval: Duration(seconds: 3)),
+                //   items: [1, 2, 3, 4, 5].map((i) {
+                //     return Builder(
+                //       builder: (BuildContext context) {
+                //         return Padding(
+                //           padding: const EdgeInsets.symmetric(horizontal: 8),
+                //           child: Container(
+                //             width: 280,
+                //             decoration: BoxDecoration(
+                //                 // boxShadow: Constants.neumorphic2,
+                //                 image: DecorationImage(
+                //                     image: AssetImage("assets/images/medicine.jpg"),
+                //                     fit: BoxFit.fill),
+                //                 borderRadius: BorderRadius.circular(10),
+                //                 color: Colors.white),
+                //           ),
+                //         );
+                //       },
+                //     );
+                //   }).toList(),
+                // ),
+
+                // SizedBox(
+                //   height: 5,
+                // ),
+                // buildIndicator(),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     SizedBox(
-                      height: height / 30,
-                    ),
-                    GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 40,
-                        mainAxisSpacing: 40,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: ClampingScrollPhysics(),
-                        children: [
-                          for (int i = 0; i < 2; i++)
-                            grid(
-                              branch: name[i],
-                              images: lotties[i],
-                              onTap: () => checkOption(i),
-                              selected: i + 1 == optionSelected,
-                            )
-                        ]),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    InkWell(
-                      onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => DietPlanScreen())),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            boxShadow: Constants.neumorphic1,
-                            borderRadius: BorderRadius.circular(15),
-                            gradient: Constants.purplegradient1),
-                        width: widht,
-                        height: 140,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              name[2],
-                              style: GoogleFonts.alice(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            Container(
-                              child: Lottie.asset(lotties[2]),
-                            )
-                          ],
+                      child: Text(
+                        "Hello\nNitish!",
+                        textAlign: TextAlign.start,
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          fontSize: height * 0.04,
+                          color: Colors.black87,
                         ),
                       ),
                     ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 40,
-                        mainAxisSpacing: 40,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.vertical,
-                        physics: ClampingScrollPhysics(),
-                        children: [
-                          for (int i = 3; i < 5; i++)
-                            grid(
-                              branch: name[i],
-                              images: lotties[i],
-                              onTap: () => checkOption(i + 1),
-                              selected: i + 1 == optionSelected,
-                            )
-                        ]),
+                    Center(
+                      child: AvatarGlow(
+                        glowColor: Colors.green,
+                        glowRadiusFactor: 0.25,
+                        // endRadius: 90.0,
+                        duration: Duration(milliseconds: 2000),
+                        repeat: true,
+                        // showTwoGlows: true,
+                        // repeatPauseDuration: Duration(milliseconds: 100),
+                        child: Material(
+                          // Replace this child with your own
+                          elevation: 15.0,
+                          shape: CircleBorder(),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(40),
+                            child: CircleAvatar(
+                                backgroundColor: Colors.white,
+                                // image
+                                radius: height * 0.04), // circleAvatar
+                          ), // ClipRRect
+                        ), // Material
+                      ), // avatarglow
+                    )
                   ],
                 ),
-              )
-            ],
+                SizedBox(
+                  width: widht,
+                  child: Text(
+                    "Welcome to the Med-List",
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: height * 0.025,
+                      color: Colors.black54,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: height * 0.02,
+                ),
+                nextMedicine(height, widht),
+                Container(
+                  margin: EdgeInsets.all(20),
+                  // color: Colors.grey,
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: height / 30,
+                      ),
+                      GridView.count(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 40,
+                          mainAxisSpacing: 40,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: ClampingScrollPhysics(),
+                          children: [
+                            for (int i = 0; i < 2; i++)
+                              grid(
+                                branch: name[i],
+                                images: lotties[i],
+                                onTap: () => checkOption(i),
+                                selected: i + 1 == optionSelected,
+                              )
+                          ]),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      InkWell(
+                        onTap: () => Navigator.push(
+                            context, MaterialPageRoute(builder: (context) => DietPlanScreen())),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              boxShadow: Constants.neumorphic1,
+                              borderRadius: BorderRadius.circular(15),
+                              gradient: Constants.purplegradient1),
+                          width: widht,
+                          height: 140,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Expanded(
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                      color: green2,
+                                      borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(15),
+                                          topLeft: Radius.circular(15))),
+                                  child: Text(
+                                    name[2],
+                                    style: GoogleFonts.poppins(
+                                        fontSize: height * 0.02,
+                                        fontWeight: FontWeight.w300,
+                                        color: Colors.white),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: widht * 0.7,
+                                child: Lottie.asset(lotties[2]),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 40,
+                      ),
+                      GridView.count(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 40,
+                          mainAxisSpacing: 40,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          physics: ClampingScrollPhysics(),
+                          children: [
+                            for (int i = 3; i < 5; i++)
+                              grid(
+                                branch: name[i],
+                                images: lotties[i],
+                                onTap: () => checkOption(i + 1),
+                                selected: i + 1 == optionSelected,
+                              )
+                          ]),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
+        ),
+      ),
+    );
+  }
+
+  String _formatTime(int time) {
+    return time < 10 ? '0$time' : '$time';
+  }
+
+  Widget nextMedicine(double height, double width) {
+    return Container(
+      width: width,
+      height: height * 0.1,
+      decoration: BoxDecoration(color: green6, borderRadius: BorderRadius.circular(height * 0.1)),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: width * 0.02),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Container(
+              height: height * 0.08,
+              width: height * 0.08,
+              alignment: Alignment.center,
+              decoration:
+                  BoxDecoration(color: green5, borderRadius: BorderRadius.circular(height * 0.1)),
+              child: FaIcon(
+                FontAwesomeIcons.houseMedical,
+                color: Colors.white,
+                size: height * 0.03,
+              ),
+            ),
+            Container(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Text(
+                    "Next Medicine",
+                    textAlign: TextAlign.start,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.w500,
+                      fontSize: height * 0.02,
+                      color: green1,
+                    ),
+                  ),
+                  Container(
+                    height: height * 0.045,
+                    width: width * 0.3,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        color: Colors.white, borderRadius: BorderRadius.circular(height * 0.1)),
+                    child: FittedBox(
+                      child: Text(
+                        '$_remainingHours:${_formatTime(_remainingMinutes)}:${_formatTime(_remainingSeconds)}',
+                        style: GoogleFonts.poppins(color: green2),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: height * 0.08,
+              width: height * 0.08,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(height * 0.1)),
+              child: FaIcon(
+                FontAwesomeIcons.forward,
+                color: green3,
+                size: height * 0.035,
+              ),
+            ),
+          ],
         ),
       ),
     );

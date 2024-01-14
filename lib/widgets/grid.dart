@@ -6,13 +6,7 @@ import 'package:lottie/lottie.dart';
 import '../constants/constants.dart';
 
 class grid extends StatelessWidget {
-  grid(
-      {this.selected,
-      this.onTap,
-      this.branch,
-      this.images,
-      this.width,
-      this.heigth});
+  grid({this.selected, this.onTap, this.branch, this.images, this.width, this.heigth});
   final double? heigth;
   final double? width;
   final String? branch;
@@ -21,6 +15,8 @@ class grid extends StatelessWidget {
   final bool? selected;
   @override
   Widget build(BuildContext context) {
+    var ht = MediaQuery.of(context).size.height;
+    var wt = MediaQuery.of(context).size.width;
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -28,25 +24,25 @@ class grid extends StatelessWidget {
           height: heigth,
           width: width,
           decoration: BoxDecoration(
-              boxShadow: selected ?? false
-                  ? Constants.neumorphic2
-                  : Constants.neumorphic1,
+              boxShadow: selected ?? false ? Constants.neumorphic2 : Constants.neumorphic1,
               borderRadius: BorderRadius.circular(15),
               gradient: Constants.purplegradient1),
-          child: Stack(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Center(
+              Container(height: ht * 0.17, child: Lottie.asset(images!)),
+              Expanded(
                 child: Container(
-                    height: 130, width: 130, child: Lottie.asset(images!)),
-              ),
-              Positioned(
-                left: 10,
-                top: 5,
-                child: Text(
-                  branch!,
-                  style: GoogleFonts.alice(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w400,
+                  width: wt,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                      color: green2,
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))),
+                  child: Text(
+                    branch!,
+                    style: GoogleFonts.poppins(
+                        fontSize: ht * 0.02, fontWeight: FontWeight.w300, color: Colors.white),
                   ),
                 ),
               ),

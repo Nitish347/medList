@@ -3,10 +3,13 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:medlist/FirestoreMethods/SaveUser.dart';
 import 'package:medlist/Hive/writeData.dart';
+import 'package:medlist/constants/constants.dart';
 import 'package:medlist/db/sqflite.dart';
 import 'package:medlist/pages/home.dart';
+import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
 import '../../Providers/UserProvider.dart';
@@ -36,120 +39,123 @@ class _VerifyPageState extends State<VerifyPage> {
   void initState() {
     // TODO: implement initState
 
-    verify(widget.phoneNumber);
+    // verify(widget.phoneNumber);
   }
-
+  final pinController = TextEditingController();
+  final focusNode = FocusNode();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: BoxDecoration(
-                image: DecorationImage(
-                    image: AssetImage("assets/images/loginback.jpeg"),
-                    fit: BoxFit.cover)),
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 1.50, sigmaY: 1.50),
-              child: Container(
-                color: Colors.black.withOpacity(0.2),
-              ),
-            ),
-          ),
-          Center(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    height: height / 10,
-                  ),
-                  Text(
-                    "Verify with OTP",
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
-                  ),
-                  Divider(
-                    height: 10,
-                  ),
-                  Text(
-                    "Sent to +91 ${widget.phoneNumber}",
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w400,
-                        color: Colors.white),
-                  ),
-                  SizedBox(
-                    height: height / 10,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.all(25.0),
-                    child: Container(
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(50),
-                          color: Colors.grey.withOpacity(0.6)),
-                      child: Padding(
-                        padding: EdgeInsets.only(right: 15, bottom: 2),
-                        child: TextField(
-                          maxLength: 6,
-                          textAlign: TextAlign.center,
-                          onChanged: (value) {
-                            otp = value;
-                          },
-                          style: TextStyle(color: Colors.white),
-                          cursorColor: Colors.white,
-                          decoration: InputDecoration(
-                              counterText: "",
-                              border: InputBorder.none,
-                              hintText: "Enter OTP",
-                              hintStyle: TextStyle(color: Colors.white)),
+      body: Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/images/loginback.jpeg"), fit: BoxFit.cover)),
+        child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 5.50, sigmaY: 5.50),
+            child: Center(
+              child: Padding(
+                padding: EdgeInsets.all(width * 0.05),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: height / 10,
+                            ),
+                            Text(
+                              "Verify the OTP",
+                              style: TextStyle(
+                                  fontSize: height * 0.03,
+                                  fontWeight: FontWeight.w400,
+                                  color: green1),
+                            ),
+                            SizedBox(
+                              height: height * 0.01,
+                            ),
+                            Text(
+                              "Sent to +91 ${widget.phoneNumber}",
+                              style: TextStyle(
+                                  fontSize: height * 0.025,
+                                  fontWeight: FontWeight.w400,
+                                  color: green1),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                  // SizedBox(height: height/25,),
-                  InkWell(
-                    onTap: () {
-                      verifycode(otp, context);
-                      // print(otp);
-                      // print(LoginPage.phoneNumber);
-                      // if (otp_visible == true) {
-                      //   verifycode();
-                      // }
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.all(25.0),
+                    SizedBox(
+                      height: height * 0.06,
+                    ),
+                    Container(
+                      width: width,
+                      alignment: Alignment.center,
+                      child: Pinput(
+                        length: 4,
+                        androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
+                        listenForMultipleSmsOnAndroid: true,
+                        defaultPinTheme: PinTheme(
+                            width: height * 0.07,
+                            height: height * 0.07,
+                            textStyle: TextStyle(
+                                fontSize: 22, color: Colors.black, fontWeight: FontWeight.w400),
+                            decoration: BoxDecoration(
+                                color: green6.withOpacity(0.5),
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(color: green2, width: 1.5))),
+                        pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                        showCursor: true,
+                        keyboardType: TextInputType.number,
+                        scrollPadding: EdgeInsets.only(bottom: 140),
+                        autofocus: true,
+                        closeKeyboardWhenCompleted: false,
+                        onSubmitted: (val) {
+                          print(val.toString());
+                        },
+                      ),
+                    ),
+                    SizedBox(
+                      height: height * 0.05,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        verifycode(otp, context);
+                        // print(otp);
+                        // print(LoginPage.phoneNumber);
+                        // if (otp_visible == true) {
+                        //   verifycode();
+                        // }
+                      },
                       child: Container(
-                        height: 50,
+                        height: height * 0.06,
+                        width: width,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            gradient: LinearGradient(colors: [
-                              Color.fromRGBO(143, 148, 251, 1),
-                              Color.fromRGBO(143, 148, 251, .6),
-                            ])),
+                          color: green1,
+                          borderRadius: BorderRadius.circular(50),
+                        ),
                         child: Center(
                           child: Text(
                             "Verify",
-                            style: TextStyle(
-                              // fontSize: 15,
+                            style: GoogleFonts.poppins(
                               color: Colors.white,
-                              fontWeight: FontWeight.w700,
+                              fontSize: height * 0.022,
+                              fontWeight: FontWeight.w400,
                             ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ),
-        ],
+            )),
       ),
     );
   }
@@ -179,8 +185,8 @@ class _VerifyPageState extends State<VerifyPage> {
   void verifycode(String otp, BuildContext context) async {
     var provider = Provider.of<UserProvider>(context, listen: false);
     print("nitish");
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verficationID_received, smsCode: otp);
+    PhoneAuthCredential credential =
+        PhoneAuthProvider.credential(verificationId: verficationID_received, smsCode: otp);
     await auth.signInWithCredential(credential).then((value) async {
       final User? user = auth.currentUser;
       final uid = user?.uid;

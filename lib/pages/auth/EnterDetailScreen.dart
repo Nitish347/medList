@@ -1,28 +1,25 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
 import 'package:medlist/Providers/DataProvider.dart';
 import 'package:medlist/constants/constants.dart';
-import 'package:medlist/pages/auth/Register.dart';
 import 'package:medlist/pages/auth/verify.dart';
 import 'package:medlist/widgets/dropdown.dart';
 import 'package:provider/provider.dart';
 
 import '../../Providers/UserProvider.dart';
 
-class LoginPage extends StatefulWidget {
+class DetailScreen extends StatefulWidget {
   String selectedHospital = '';
   bool isLoding = false;
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<DetailScreen> createState() => _DetailScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _DetailScreenState extends State<DetailScreen> {
   String id = "loginPage";
   String phoneNumber = "";
   String name = "";
@@ -197,18 +194,16 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.all(width * 0.03),
                       child: InkWell(
                         onTap: () {
-                          Get.to(Register());
-
                           if (_formKey.currentState?.validate() ?? false) {}
                           provider.UserName = name;
                           provider.UserPhoneNumber = phoneNumber;
-                          if (name != "" && phoneNumber != "") Get.to(Register());
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => VerifyPage(
-                          //               phoneNumber: phoneNumber,
-                          //             )));
+                          if (name != "" && phoneNumber != "")
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VerifyPage(
+                                          phoneNumber: phoneNumber,
+                                        )));
                         },
                         child: Container(
                           height: height * 0.065,
@@ -369,7 +364,7 @@ class CustomSearchDelegate extends SearchDelegate {
         itemCount: matchQuery.length,
         itemBuilder: (context, index) {
           var result = matchQuery[index];
-          return !LoginPage().isLoding
+          return !DetailScreen().isLoding
               ? ListTile(
                   onTap: () {
                     print(result);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+// import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlist/Providers/DataProvider.dart';
@@ -48,107 +48,183 @@ class _DietPlanScreenState extends State<DietPlanScreen> {
               child: Lottie.asset('assets/lottie/diet.json'),
             ),
             Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Neumorphic(
-                  style: NeumorphicStyle(
-                      shape: NeumorphicShape.concave,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                          BorderRadius.circular(12)),
-                      depth: 8,
-                      lightSource: LightSource.topLeft,
-                      color: Colors.white54),
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "What to Eat",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        for (int i = 0; i < provider.dietPlan!.eat!.length; i++)
-                          Container(
-                            padding: EdgeInsets.all(10),
-                            alignment: Alignment.centerLeft,
-                            child: Row(
-                              children: [
-                                Text(
-                                  "${i + 1}.",
-                                  style: TextStyle(
-                                      fontSize: 19,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Text(
-                                  provider.dietPlan!.eat![i],
-                                  style: TextStyle(fontSize: 17),
-                                )
-                              ],
-                            ),
-                          )
-                      ],
-                    ),
-                  )),
-            ),
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "What to Eat",
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      for (int i = 0; i < provider.dietPlan!.eat!.length; i++)
+                        Container(
+                          padding: EdgeInsets.all(10),
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              Text(
+                                "${i + 1}.",
+                                style: TextStyle(fontSize: 19, fontWeight: FontWeight.w500),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                provider.dietPlan!.eat![i],
+                                style: TextStyle(fontSize: 17),
+                              )
+                            ],
+                          ),
+                        )
+                    ],
+                  ),
+                )),
+            // Neumorphic(
+            //     style: NeumorphicStyle(
+            //         shape: NeumorphicShape.concave,
+            //         boxShape: NeumorphicBoxShape.roundRect(
+            //             BorderRadius.circular(12)),
+            //         depth: 8,
+            //         lightSource: LightSource.topLeft,
+            //         color: Colors.white54),
+            //     child: Container(
+            //       padding: EdgeInsets.all(10),
+            //       width: double.infinity,
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children: [
+            //           Text(
+            //             "What to Eat",
+            //             style: TextStyle(
+            //                 fontSize: 22, fontWeight: FontWeight.w700),
+            //           ),
+            //           SizedBox(
+            //             height: 10,
+            //           ),
+            //           for (int i = 0; i < provider.dietPlan!.eat!.length; i++)
+            //             Container(
+            //               padding: EdgeInsets.all(10),
+            //               alignment: Alignment.centerLeft,
+            //               child: Row(
+            //                 children: [
+            //                   Text(
+            //                     "${i + 1}.",
+            //                     style: TextStyle(
+            //                         fontSize: 19,
+            //                         fontWeight: FontWeight.w500),
+            //                   ),
+            //                   SizedBox(
+            //                     width: 10,
+            //                   ),
+            //                   Text(
+            //                     provider.dietPlan!.eat![i],
+            //                     style: TextStyle(fontSize: 17),
+            //                   )
+            //                 ],
+            //               ),
+            //             )
+            //         ],
+            //       ),
+            //     )),
+            // ),
             Padding(
-              padding: const EdgeInsets.all(18.0),
-              child: Neumorphic(
-                  style: NeumorphicStyle(
-                      shape: NeumorphicShape.concave,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                          BorderRadius.circular(12)),
-                      depth: 8,
-                      lightSource: LightSource.topLeft,
-                      color: Colors.white54),
-                  child: Container(
-                    padding: EdgeInsets.all(10),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "What to Avoid",
-                          style: TextStyle(
-                              fontSize: 22, fontWeight: FontWeight.w700),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        // for (int i = 0;
-                        //     i < provider.dietPlan!.notEat!.length;
-                        //     i++)
-                        //   Container(
-                        //     padding: EdgeInsets.all(10),
-                        //     alignment: Alignment.centerLeft,
-                        //     child: Row(
-                        //       children: [
-                        //         Text(
-                        //           "${i + 1}.",
-                        //           style: TextStyle(
-                        //               fontSize: 19,
-                        //               fontWeight: FontWeight.w500),
-                        //         ),
-                        //         SizedBox(
-                        //           width: 10,
-                        //         ),
-                        //         Text(
-                        //           provider.dietPlan!.notEat![i],
-                        //           style: TextStyle(fontSize: 17),
-                        //         )
-                        //       ],
-                        //     ),
-                        //   )
-                      ],
-                    ),
-                  )),
-            )
+                padding: const EdgeInsets.all(18.0),
+                child: Container(
+                  padding: EdgeInsets.all(10),
+                  width: double.infinity,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        "What to Avoid",
+                        style: TextStyle(fontSize: 22, fontWeight: FontWeight.w700),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      // for (int i = 0;
+                      //     i < provider.dietPlan!.notEat!.length;
+                      //     i++)
+                      //   Container(
+                      //     padding: EdgeInsets.all(10),
+                      //     alignment: Alignment.centerLeft,
+                      //     child: Row(
+                      //       children: [
+                      //         Text(
+                      //           "${i + 1}.",
+                      //           style: TextStyle(
+                      //               fontSize: 19,
+                      //               fontWeight: FontWeight.w500),
+                      //         ),
+                      //         SizedBox(
+                      //           width: 10,
+                      //         ),
+                      //         Text(
+                      //           provider.dietPlan!.notEat![i],
+                      //           style: TextStyle(fontSize: 17),
+                      //         )
+                      //       ],
+                      //     ),
+                      //   )
+                    ],
+                  ),
+                )),
+            // Neumorphic(
+            //     style: NeumorphicStyle(
+            //         shape: NeumorphicShape.concave,
+            //         boxShape: NeumorphicBoxShape.roundRect(
+            //             BorderRadius.circular(12)),
+            //         depth: 8,
+            //         lightSource: LightSource.topLeft,
+            //         color: Colors.white54),
+            //     child: Container(
+            //       padding: EdgeInsets.all(10),
+            //       width: double.infinity,
+            //       child: Column(
+            //         crossAxisAlignment: CrossAxisAlignment.center,
+            //         children: [
+            //           Text(
+            //             "What to Avoid",
+            //             style: TextStyle(
+            //                 fontSize: 22, fontWeight: FontWeight.w700),
+            //           ),
+            //           SizedBox(
+            //             height: 10,
+            //           ),
+            //           // for (int i = 0;
+            //           //     i < provider.dietPlan!.notEat!.length;
+            //           //     i++)
+            //           //   Container(
+            //           //     padding: EdgeInsets.all(10),
+            //           //     alignment: Alignment.centerLeft,
+            //           //     child: Row(
+            //           //       children: [
+            //           //         Text(
+            //           //           "${i + 1}.",
+            //           //           style: TextStyle(
+            //           //               fontSize: 19,
+            //           //               fontWeight: FontWeight.w500),
+            //           //         ),
+            //           //         SizedBox(
+            //           //           width: 10,
+            //           //         ),
+            //           //         Text(
+            //           //           provider.dietPlan!.notEat![i],
+            //           //           style: TextStyle(fontSize: 17),
+            //           //         )
+            //           //       ],
+            //           //     ),
+            //           //   )
+            //         ],
+            //       ),
+            //     )),
+            // )
           ],
         ),
       ),
