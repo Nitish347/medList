@@ -305,7 +305,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: height / 30,
+                        height: height * 0.01,
                       ),
                       GridView.count(
                           crossAxisCount: 2,
@@ -324,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               )
                           ]),
                       SizedBox(
-                        height: 40,
+                        height: height * 0.02,
                       ),
                       InkWell(
                         onTap: () => Navigator.push(
@@ -365,7 +365,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                       SizedBox(
-                        height: 40,
+                        height: height * 0.03,
                       ),
                       GridView.count(
                           crossAxisCount: 2,

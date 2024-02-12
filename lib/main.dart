@@ -13,6 +13,7 @@ import 'package:medlist/pages/auth/Register.dart';
 import 'package:medlist/pages/auth/login.dart';
 import 'package:medlist/pages/home.dart';
 import 'package:medlist/pages/optionScreen.dart';
+import 'package:medlist/widgets/bottombar.dart';
 import 'package:provider/provider.dart';
 
 // import 'Notifications/noti.dart';
@@ -29,7 +30,7 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNo
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   AndroidInitializationSettings androidSettings =
       AndroidInitializationSettings('@mipmap/ic_launcher');
@@ -87,9 +88,7 @@ class _MyAppState extends State<MyApp> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                return HomeScreen(
-                  uid: '',
-                );
+                return BottomBar();
               })),
     );
   }

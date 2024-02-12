@@ -30,7 +30,7 @@ class grid extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Container(height: ht * 0.17, child: Lottie.asset(images!)),
+              Container(height: ht * 0.13, child: Lottie.asset(images!)),
               Expanded(
                 child: Container(
                   width: wt,
@@ -38,7 +38,7 @@ class grid extends StatelessWidget {
                   decoration: BoxDecoration(
                       color: green2,
                       borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(15), bottomRight: Radius.circular(15))),
+                          bottomLeft: Radius.circular(12), bottomRight: Radius.circular(12))),
                   child: Text(
                     branch!,
                     style: GoogleFonts.poppins(

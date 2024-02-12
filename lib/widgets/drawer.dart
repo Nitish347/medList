@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -22,8 +22,7 @@ Widget drawer(BuildContext context, String name) {
           decoration: BoxDecoration(
               color: Colors.blue.shade700,
               borderRadius: BorderRadius.only(
-                  bottomRight: Radius.circular(30),
-                  bottomLeft: Radius.circular(0))),
+                  bottomRight: Radius.circular(30), bottomLeft: Radius.circular(0))),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
@@ -45,9 +44,7 @@ Widget drawer(BuildContext context, String name) {
                 Text(
                   name,
                   style: GoogleFonts.alice(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white),
+                      fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
                 ),
               ],
             ),
@@ -224,8 +221,8 @@ Widget drawer(BuildContext context, String name) {
             child: Container(
               height: 40,
               width: 200,
-              decoration: BoxDecoration(
-                  color: Colors.teal, borderRadius: BorderRadius.circular(20)),
+              decoration:
+                  BoxDecoration(color: Colors.teal, borderRadius: BorderRadius.circular(20)),
               child: Center(
                 child: Text(
                   "Book Appointment",
@@ -244,9 +241,8 @@ Widget drawer(BuildContext context, String name) {
             child: Container(
               height: 40,
               width: 200,
-              decoration: BoxDecoration(
-                  color: Colors.indigo,
-                  borderRadius: BorderRadius.circular(20)),
+              decoration:
+                  BoxDecoration(color: Colors.indigo, borderRadius: BorderRadius.circular(20)),
               child: Center(
                 child: Text(
                   "Emergency Call",
@@ -262,16 +258,14 @@ Widget drawer(BuildContext context, String name) {
         Center(
           child: InkWell(
             onTap: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginPage()));
+              // await FirebaseAuth.instance.signOut();
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
             },
             child: Container(
               height: 40,
               width: 200,
-              decoration: BoxDecoration(
-                  color: Colors.redAccent,
-                  borderRadius: BorderRadius.circular(20)),
+              decoration:
+                  BoxDecoration(color: Colors.redAccent, borderRadius: BorderRadius.circular(20)),
               child: Center(
                 child: Text(
                   "LogOut",
