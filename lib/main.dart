@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:medlist/Providers/DataProvider.dart';
@@ -11,6 +12,8 @@ import 'package:medlist/pages/DietPlanScreen.dart';
 import 'package:medlist/pages/MedicineTimeScreen.dart';
 import 'package:medlist/pages/auth/Register.dart';
 import 'package:medlist/pages/auth/login.dart';
+import 'package:medlist/pages/auth/verify.dart';
+
 import 'package:medlist/pages/home.dart';
 import 'package:medlist/pages/optionScreen.dart';
 import 'package:medlist/widgets/bottombar.dart';
@@ -60,6 +63,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    var height = MediaQuery.of(context).size.height;
+    var width = MediaQuery.of(context).size.width;
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => DataProvider()),

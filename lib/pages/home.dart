@@ -150,11 +150,11 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: drawer(context, nameUser),
         appBar: AppBar(
-          leading: Icon(
-            Icons.menu,
-            color: green1,
-            size: height * 0.035,
-          ),
+          // leading: Icon(
+          //   Icons.menu,
+          //   color: green1,
+          //   size: height * 0.035,
+          // ),
           actions: [
             IconButton(
                 onPressed: () async {

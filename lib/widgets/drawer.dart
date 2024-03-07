@@ -1,4 +1,5 @@
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -258,7 +259,7 @@ Widget drawer(BuildContext context, String name) {
         Center(
           child: InkWell(
             onTap: () async {
-              // await FirebaseAuth.instance.signOut();
+              await FirebaseAuth.instance.signOut();
               Navigator.push(context, MaterialPageRoute(builder: (context) => LoginPage()));
             },
             child: Container(

@@ -41,13 +41,15 @@ class _RegisterState extends State<Register> {
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
       backgroundColor: Colors.white,
-      body: Container(
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/images/loginback.jpeg"), fit: BoxFit.cover)),
-        child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5.50, sigmaY: 5.50), child: RegisterForm2()),
+      body: SafeArea(
+        child: Container(
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage("assets/images/loginback.jpeg"), fit: BoxFit.cover)),
+          child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 15.50, sigmaY: 15.50), child: RegisterForm1()),
+        ),
       ),
     );
   }

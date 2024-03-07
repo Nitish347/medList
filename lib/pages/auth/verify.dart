@@ -9,6 +9,7 @@ import 'package:medlist/Hive/writeData.dart';
 import 'package:medlist/constants/constants.dart';
 import 'package:medlist/db/sqflite.dart';
 import 'package:medlist/pages/home.dart';
+import 'package:medlist/widgets/alert.dart';
 import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
@@ -35,12 +36,12 @@ bool next = false;
 bool otp_visible = false;
 
 class _VerifyPageState extends State<VerifyPage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    // verify(widget.phoneNumber);
-  }
+  // @override
+  // void initState() {
+  //   // TODO: implement initState
+  //
+  //   // verify(widget.phoneNumber);
+  // }
   final pinController = TextEditingController();
   final focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();
@@ -51,11 +52,11 @@ class _VerifyPageState extends State<VerifyPage> {
 
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             image: DecorationImage(
                 image: AssetImage("assets/images/loginback.jpeg"), fit: BoxFit.cover)),
         child: BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5.50, sigmaY: 5.50),
+            filter: ImageFilter.blur(sigmaX: 15.50, sigmaY: 15.50),
             child: Center(
               child: Padding(
                 padding: EdgeInsets.all(width * 0.05),
@@ -73,8 +74,8 @@ class _VerifyPageState extends State<VerifyPage> {
                             Text(
                               "Verify the OTP",
                               style: TextStyle(
-                                  fontSize: height * 0.03,
-                                  fontWeight: FontWeight.w400,
+                                  fontSize: height * 0.04,
+                                  fontWeight: FontWeight.w500,
                                   color: green1),
                             ),
                             SizedBox(
@@ -98,26 +99,26 @@ class _VerifyPageState extends State<VerifyPage> {
                       width: width,
                       alignment: Alignment.center,
                       child: Pinput(
-                        length: 4,
-                        androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
-                        listenForMultipleSmsOnAndroid: true,
+                        length: 6,
+                        // androidSmsAutofillMethod: AndroidSmsAutofillMethod.smsUserConsentApi,
+                        // listenForMultipleSmsOnAndroid: true,
                         defaultPinTheme: PinTheme(
                             width: height * 0.07,
                             height: height * 0.07,
-                            textStyle: TextStyle(
+                            textStyle: const TextStyle(
                                 fontSize: 22, color: Colors.black, fontWeight: FontWeight.w400),
                             decoration: BoxDecoration(
                                 color: green6.withOpacity(0.5),
                                 borderRadius: BorderRadius.circular(8),
                                 border: Border.all(color: green2, width: 1.5))),
-                        pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-                        showCursor: true,
+                        // pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+                        // showCursor: true,
                         keyboardType: TextInputType.number,
-                        scrollPadding: EdgeInsets.only(bottom: 140),
-                        autofocus: true,
-                        closeKeyboardWhenCompleted: false,
+                        // scrollPadding: EdgeInsets.only(bottom: 140),
+                        // autofocus: true,
+                        // closeKeyboardWhenCompleted: false,
                         onSubmitted: (val) {
-                          print(val.toString());
+                          // print(val.toString());
                         },
                       ),
                     ),
@@ -126,7 +127,10 @@ class _VerifyPageState extends State<VerifyPage> {
                     ),
                     InkWell(
                       onTap: () {
-                        verifycode(otp, context);
+                        if (otp.length < 6) {
+                          alert(context, "Invalid OTP!", "Please enter correct OTP.", true);
+                        }
+                        // verifycode(otp, context);
                         // print(otp);
                         // print(LoginPage.phoneNumber);
                         // if (otp_visible == true) {

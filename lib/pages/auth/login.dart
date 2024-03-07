@@ -8,6 +8,7 @@ import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
 import 'package:medlist/Providers/DataProvider.dart';
 import 'package:medlist/constants/constants.dart';
 import 'package:medlist/pages/auth/Register.dart';
+import 'package:medlist/pages/auth/RegisterForm.dart';
 import 'package:medlist/pages/auth/verify.dart';
 import 'package:medlist/widgets/dropdown.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +28,7 @@ class _LoginPageState extends State<LoginPage> {
   String phoneNumber = "";
   String name = "";
   TextEditingController userName = TextEditingController();
+  TextEditingController phone = TextEditingController();
   // @override
   // void initState() {
   //   // TODO: implement initState
@@ -48,38 +50,32 @@ class _LoginPageState extends State<LoginPage> {
             image: DecorationImage(
                 image: AssetImage("assets/images/loginback.jpeg"), fit: BoxFit.cover)),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 1.50, sigmaY: 1.50),
+          filter: ImageFilter.blur(sigmaX: 5.50, sigmaY: 5.50),
           child: Form(
             key: _formKey,
             child: Container(
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.3), borderRadius: BorderRadius.circular(10)),
-              height: height * 0.8,
+              height: height * 0.6,
               width: width * 0.85,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    SizedBox(
-                      height: height * 0.02,
-                    ),
                     Image.asset(
                       "assets/images/medlist.png",
                       height: height * 0.1,
                     ),
                     SizedBox(
-                      height: height * 0.1,
+                      height: height * 0.05,
                     ),
 
                     textField1("Enter Your Name", false, false, height, width, Icons.person,
                         userName, validateAbout),
-                    // textField1("Enter Your Age", false, true, height, width, Icons.accessibility,
-                    //     userName, validateAbout, 2),
-
-                    textField1("Enter Your phone", false, true, height, width, Icons.phone,
-                        userName, validateAbout, 10),
+                    textField1("Enter Your phone", false, true, height, width, Icons.phone, phone,
+                        validateAbout, 10),
                     SizedBox(
                       height: height * 0.05,
                     ),
@@ -197,18 +193,10 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.all(width * 0.03),
                       child: InkWell(
                         onTap: () {
-                          Get.to(Register());
-
                           if (_formKey.currentState?.validate() ?? false) {}
                           provider.UserName = name;
                           provider.UserPhoneNumber = phoneNumber;
                           if (name != "" && phoneNumber != "") Get.to(Register());
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) => VerifyPage(
-                          //               phoneNumber: phoneNumber,
-                          //             )));
                         },
                         child: Container(
                           height: height * 0.065,
@@ -217,7 +205,7 @@ class _LoginPageState extends State<LoginPage> {
                             color: green1,
                             borderRadius: BorderRadius.circular(50),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               "Login",
                               style: TextStyle(
@@ -229,6 +217,27 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: height * 0.05,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.to(() => RegisterForm1());
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Don't have an account?",
+                            style: GoogleFonts.poppins(color: Colors.white),
+                          ),
+                          Text(
+                            " Register",
+                            style: GoogleFonts.poppins(color: green1),
+                          ),
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),
@@ -241,7 +250,7 @@ class _LoginPageState extends State<LoginPage> {
 
   String? validateAbout(String? value) {
     if (value!.isEmpty) {
-      return 'Enter the about';
+      return '*required!';
     }
     return null;
   }
@@ -254,54 +263,52 @@ class _LoginPageState extends State<LoginPage> {
 
       // margin: EdgeInsets.symmetric(vertical: height * 0.02),
       padding: EdgeInsets.all(width * 0.03),
-      child: Expanded(
-        child: TextFormField(
-          controller: controller,
-          keyboardType: phone ? TextInputType.number : null,
-          maxLength: length,
-          obscureText: pass,
-          validator: validator,
-          decoration: InputDecoration(
-            counterText: "",
-            hintText: hint,
-            suffixIcon: pass
-                ? Icon(
-                    Icons.visibility_off_outlined,
-                    color: Colors.grey,
-                  )
-                : null,
-            filled: true,
-            fillColor: Colors.white.withOpacity(0.8),
-            // labelText: hint,
-            prefixIcon: Icon(
-              icon,
-              color: green2,
-            ),
-            // labelStyle: GoogleFonts.poppins(fontSize: height * 0.018, color: Colors.green),
-            hintStyle: GoogleFonts.poppins(
-                fontSize: height * 0.021,
-                color: Colors.green.withOpacity(0.7),
-                fontWeight: FontWeight.w400),
-            contentPadding: EdgeInsets.only(left: 10),
-            enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.green),
-              borderRadius: BorderRadius.circular(50),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.green),
-              borderRadius: BorderRadius.circular(50),
-            ),
-            errorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                )),
-            focusedErrorBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(50),
-                borderSide: BorderSide(
-                  color: Colors.red,
-                )),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: phone ? TextInputType.number : null,
+        maxLength: length,
+        obscureText: pass,
+        validator: validator,
+        decoration: InputDecoration(
+          counterText: "",
+          hintText: hint,
+          suffixIcon: pass
+              ? Icon(
+                  Icons.visibility_off_outlined,
+                  color: Colors.grey,
+                )
+              : null,
+          filled: true,
+          fillColor: Colors.white.withOpacity(0.8),
+          // labelText: hint,
+          prefixIcon: Icon(
+            icon,
+            color: green2,
           ),
+          // labelStyle: GoogleFonts.poppins(fontSize: height * 0.018, color: Colors.green),
+          hintStyle: GoogleFonts.poppins(
+              fontSize: height * 0.021,
+              color: Colors.green.withOpacity(0.7),
+              fontWeight: FontWeight.w400),
+          contentPadding: EdgeInsets.only(left: 10),
+          enabledBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.green),
+            borderRadius: BorderRadius.circular(50),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.green),
+            borderRadius: BorderRadius.circular(50),
+          ),
+          errorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(
+                color: Colors.red,
+              )),
+          focusedErrorBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(50),
+              borderSide: BorderSide(
+                color: Colors.red,
+              )),
         ),
       ),
     );
