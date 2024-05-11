@@ -2,10 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:medlist/Providers/DataProvider.dart';
 import 'package:medlist/Providers/UserProvider.dart';
-
-import 'package:medlist/db/sqflite.dart';
 import 'package:medlist/models/dietPlan.dart';
-
 import 'package:medlist/models/exercise_model.dart';
 import 'package:medlist/models/hospital_model.dart';
 import 'package:medlist/models/medicine_model.dart';
@@ -20,9 +17,9 @@ class FirestoreData {
     var provider1 = Provider.of<UserProvider>(context, listen: false);
     var snap = await FirebaseFirestore.instance
         .collection('HospitalNames')
-        .doc(provider1.user!.hospitalName)
+        .doc(provider1.hospital)
         .collection("Users")
-        .doc(uid)
+        .doc(provider1.uid)
         .collection("Medicines")
         .get();
     List<MedicineModel> list = [];
@@ -59,15 +56,16 @@ class FirestoreData {
     print("fetching");
     var snap = await FirebaseFirestore.instance
         .collection('HospitalNames')
-        .doc(provider1.user!.hospitalName)
+        .doc(provider1.hospital)
         .collection("Users")
-        .doc(uid)
+        .doc(provider1.uid)
         .collection("Exercises")
         .get();
     List<ExerciseModel> list = [];
     // print(snap.docs[0].data()["exercises"]);
     // print(snap.docs[0].data()["medicines"]);
     for (var data in snap.docs[0].data()["exercise"]) {
+      print(data.toString());
       // print(data);
       MedicineModel medicineModel = MedicineModel.fromMap(data);
       ExerciseModel exerciseModel = ExerciseModel.fromMap(data);
@@ -136,9 +134,9 @@ class FirestoreData {
     print("fetching");
     var snap = await FirebaseFirestore.instance
         .collection('HospitalNames')
-        .doc(provider1.user!.hospitalName)
+        .doc(provider1.hospital)
         .collection("Users")
-        .doc(uid)
+        .doc(provider1.uid)
         .collection("DietPlan")
         .get();
     List<DietModel> list = [];
@@ -148,4 +146,21 @@ class FirestoreData {
     provider.dietPlanUpdate(dietModel);
     print(provider.dietPlan!.eat);
   }
+
+  //******************
+static bookAppointment(BuildContext context, String time)async{
+    var provider = Provider.of<UserProvider>(context, listen: false);
+    await FirebaseFirestore.instance
+        .collection('HospitalNames')
+        .doc(provider.hospital)
+        .collection("Users")
+        .doc(provider.uid)
+        .set({
+      "Name": provider.user!.name,
+      "PhoneNumber": provider.user!.phoneNumber,
+      "Time" : time,
+      "uid": provider.uid
+    });
+  }
 }
+

@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
 import 'package:medlist/Providers/UserProvider.dart';
 import 'package:medlist/models/hospital_model.dart';
@@ -11,6 +14,7 @@ import 'package:provider/provider.dart';
 Widget drawer(BuildContext context, String name) {
   var height = MediaQuery.of(context).size.height;
   var provider = Provider.of<UserProvider>(context, listen: false);
+  DateTime? picked;
   return Drawer(
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
@@ -208,16 +212,49 @@ Widget drawer(BuildContext context, String name) {
           height: 1,
           width: double.infinity,
         ),
+        Visibility(
+          visible: provider.appointment!= null,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+            provider.appointment == null ? Text("") :   Text(provider.appointment!.day.toString()+ "/"+ provider.appointment!.month.toString() + "/" + provider.appointment!.year.toString(),style: GoogleFonts.poppins(
+                  fontSize: 15
+              ),),
+              InkWell(
+                onTap: ()async{
+                  await FirestoreData.bookAppointment(context, provider.appointment.toString());
+
+                },
+                child:  Container(
+                  height: 30,
+                  width: 150,
+                  decoration: BoxDecoration(
+                      color: Colors.red, borderRadius: BorderRadius.circular(20)),
+                  child: Center(
+                    child: Text(
+                      "Confirm Appointment",
+                      style: GoogleFonts.poppins(color: Colors.white,),
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        ),
         SizedBox(
           height: 30,
         ),
         Center(
           child: InkWell(
             onTap: () async {
-              DateTime? pickedDate = await showDatePicker(
+
+              provider.appointment = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
                   firstDate: DateTime(1950),
+                  onDatePickerModeChange: (value){
+                    log(value.toString());
+                  },
                   //DateTime.now() - not to allow to choose before today.
                   lastDate: DateTime(2100));
             },
@@ -235,6 +272,8 @@ Widget drawer(BuildContext context, String name) {
             ),
           ),
         ),
+
+
         SizedBox(
           height: 20,
         ),

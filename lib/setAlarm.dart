@@ -29,7 +29,7 @@ class SetAlarm {
     print(scheduleAlarmDateTime);
     await flutterLocalNotificationsPlugin.schedule(
         alarmInfo.id!,
-        "Exercise Name : ",
+        "",
         alarmInfo.title,
         scheduleAlarmDateTime,
         platformChannelSpecifics);

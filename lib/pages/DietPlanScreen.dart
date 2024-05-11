@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlist/Providers/DataProvider.dart';
@@ -49,15 +49,17 @@ class _DietPlanScreenState extends State<DietPlanScreen> {
             ),
             Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Neumorphic(
-                  style: NeumorphicStyle(
-                      shape: NeumorphicShape.concave,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                          BorderRadius.circular(12)),
-                      depth: 8,
-                      lightSource: LightSource.topLeft,
-                      color: Colors.white54),
-                  child: Container(
+              child:
+              // Neumorphic(
+              //     style: NeumorphicStyle(
+              //         shape: NeumorphicShape.concave,
+              //         boxShape: NeumorphicBoxShape.roundRect(
+              //             BorderRadius.circular(12)),
+              //         depth: 8,
+              //         lightSource: LightSource.topLeft,
+              //         color: Colors.white54),
+              //     child:
+                  Container(
                     padding: EdgeInsets.all(10),
                     width: double.infinity,
                     child: Column(
@@ -95,19 +97,21 @@ class _DietPlanScreenState extends State<DietPlanScreen> {
                           )
                       ],
                     ),
-                  )),
+                  ),
             ),
             Padding(
               padding: const EdgeInsets.all(18.0),
-              child: Neumorphic(
-                  style: NeumorphicStyle(
-                      shape: NeumorphicShape.concave,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                          BorderRadius.circular(12)),
-                      depth: 8,
-                      lightSource: LightSource.topLeft,
-                      color: Colors.white54),
-                  child: Container(
+              child:
+              // Neumorphic(
+              //     style: NeumorphicStyle(
+              //         shape: NeumorphicShape.concave,
+              //         boxShape: NeumorphicBoxShape.roundRect(
+              //             BorderRadius.circular(12)),
+              //         depth: 8,
+              //         lightSource: LightSource.topLeft,
+              //         color: Colors.white54),
+              //     child:
+                  Container(
                     padding: EdgeInsets.all(10),
                     width: double.infinity,
                     child: Column(
@@ -121,6 +125,28 @@ class _DietPlanScreenState extends State<DietPlanScreen> {
                         SizedBox(
                           height: 10,
                         ),
+                        for (int i = 0; i < provider.dietPlan!.avoid!.length; i++)
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            alignment: Alignment.centerLeft,
+                            child: Row(
+                              children: [
+                                Text(
+                                  "${i + 1}.",
+                                  style: TextStyle(
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  provider.dietPlan!.avoid![i],
+                                  style: TextStyle(fontSize: 17),
+                                )
+                              ],
+                            ),
+                          )
                         // for (int i = 0;
                         //     i < provider.dietPlan!.notEat!.length;
                         //     i++)
@@ -148,7 +174,7 @@ class _DietPlanScreenState extends State<DietPlanScreen> {
                       ],
                     ),
                   )),
-            )
+
           ],
         ),
       ),

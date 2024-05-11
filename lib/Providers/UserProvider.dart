@@ -13,6 +13,9 @@ class UserProvider with ChangeNotifier {
   String selectedHospital = 'Select Your Hospital';
   String UserName = 'Select Your Hospital';
   String UserPhoneNumber = '';
+  String uid ="MBD6ejDLY8eaPm1pFLWC9gNaD2E2";
+  String hospital ="Delhi Aims";
+  DateTime? appointment;
 
   void updateUser(User user) {
     this.user = user;

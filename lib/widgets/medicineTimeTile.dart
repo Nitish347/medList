@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 
 class MedicineTimeTile extends StatefulWidget {
@@ -49,14 +49,16 @@ class _MedicineTimeTileState extends State<MedicineTimeTile> {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(8.0),
-      child: Neumorphic(
-          style: NeumorphicStyle(
-              shape: NeumorphicShape.concave,
-              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
-              depth: 8,
-              lightSource: LightSource.top,
-              color: Colors.white10),
-          child: Container(
+      child:
+      // Neumorphic(
+      //     style: NeumorphicStyle(
+      //         shape: NeumorphicShape.concave,
+      //         boxShape: NeumorphicBoxShape.roundRect(BorderRadius.circular(12)),
+      //         depth: 8,
+      //         lightSource: LightSource.top,
+      //         color: Colors.white10),
+      //     child:
+          Container(
             alignment: Alignment.center,
             padding: EdgeInsets.all(10),
             width: double.infinity,
@@ -116,7 +118,7 @@ class _MedicineTimeTileState extends State<MedicineTimeTile> {
                     backgroundColor: Colors.white12),
               ],
             ),
-          )),
+          ),
     );
   }
 }

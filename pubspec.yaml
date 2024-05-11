@@ -27,7 +27,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   carousel_slider: ^4.2.1
   expandable: ^5.0.1
-  google_fonts:
+  google_fonts: 5.0.0
   lottie:
   flutter_switch :
   firebase_auth:
@@ -37,7 +37,7 @@ dependencies:
   toggle_switch:
   animated_toggle_switch:
   smooth_page_indicator: ^1.0.0+2
-  flutter_neumorphic: ^3.2.0
+#  flutter_neumorphic: ^3.2.0
   provider: ^6.0.5
   shared_preferences:
   hive_flutter:

@@ -13,12 +13,6 @@ import 'package:medlist/pages/home.dart';
 import 'package:medlist/pages/optionScreen.dart';
 import 'package:provider/provider.dart';
 
-import 'Notifications/noti.dart';
-import 'package:flutter/material.dart';
-
-import 'ChatMessagesModel.dart';
-import 'global_members.dart';
-import 'widgets/sender_row_view.dart';
 
 var url =
     'https://i.pinimg.com/736x/fd/6e/04/fd6e04548095d7f767917f344a904ff1.jpg';
@@ -29,8 +23,8 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+   WidgetsFlutterBinding.ensureInitialized();
+ await  Firebase.initializeApp();
 
   AndroidInitializationSettings androidSettings =
       AndroidInitializationSettings('@mipmap/ic_launcher');

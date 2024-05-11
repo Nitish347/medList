@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlist/widgets/appbar.dart';
@@ -63,15 +62,17 @@ class _PastMedicinesState extends State<PastMedicines> {
             for (int i = 0; i < 4; i++)
               Padding(
                 padding: const EdgeInsets.all(18.0),
-                child: Neumorphic(
-                    style: NeumorphicStyle(
-                        shape: NeumorphicShape.concave,
-                        boxShape: NeumorphicBoxShape.roundRect(
-                            BorderRadius.circular(12)),
-                        depth: 8,
-                        lightSource: LightSource.topLeft,
-                        color: Colors.white54),
-                    child: Container(
+                child:
+                // Neumorphic(
+                //     style: NeumorphicStyle(
+                //         shape: NeumorphicShape.concave,
+                //         boxShape: NeumorphicBoxShape.roundRect(
+                //             BorderRadius.circular(12)),
+                //         depth: 8,
+                //         lightSource: LightSource.topLeft,
+                //         color: Colors.white54),
+                //     child:
+                    Container(
                       padding: EdgeInsets.all(10),
                       width: double.infinity,
                       child: Column(
@@ -107,7 +108,7 @@ class _PastMedicinesState extends State<PastMedicines> {
                         ],
                       ),
                     )),
-              )
+
           ],
         ),
       ),
