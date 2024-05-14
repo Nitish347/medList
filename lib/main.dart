@@ -15,6 +15,7 @@ import 'package:medlist/pages/auth/login.dart';
 import 'package:medlist/pages/auth/verify.dart';
 
 import 'package:medlist/pages/home.dart';
+import 'package:medlist/pages/login/login_screen.dart';
 import 'package:medlist/pages/optionScreen.dart';
 import 'package:medlist/widgets/bottombar.dart';
 import 'package:provider/provider.dart';
@@ -65,12 +66,7 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => DataProvider()),
-        ChangeNotifierProvider(create: (_) => UserProvider())
-      ],
-      child: GetMaterialApp(
+    return GetMaterialApp(
           title: 'Flutter Demo',
           showSemanticsDebugger: false,
           theme: ThemeData(
@@ -93,8 +89,8 @@ class _MyAppState extends State<MyApp> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                return BottomBar();
-              })),
+                return LoginScreen();
+              })
     );
   }
 }
