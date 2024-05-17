@@ -10,7 +10,7 @@ import 'models/alarm_info.dart';
 import 'package:http/http.dart' as http;
 
 class SetAlarm {
-  void ScheduleAlarm(DateTime scheduleAlarmDateTime, MedicineModel alarmInfo,
+  void ScheduleAlarm(DateTime scheduleAlarmDateTime, Medicine alarmInfo,
       {required bool isRepeating}) async {
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         const AndroidNotificationDetails(
@@ -37,7 +37,7 @@ class SetAlarm {
 
   //**********************************************************************************************
 
-  void onSaveAlarm(bool _isRepeating, DateTime time, MedicineModel alarmInfo) {
+  void onSaveAlarm(bool _isRepeating, DateTime time, Medicine alarmInfo) {
     DateTime? scheduleAlarmDateTime;
     if (time.isAfter(DateTime.now()))
       scheduleAlarmDateTime = time;

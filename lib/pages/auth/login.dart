@@ -38,8 +38,8 @@ class _LoginPageState extends State<LoginPage> {
   final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    var provider = Provider.of<UserProvider>(context, listen: false);
-    var provider1 = Provider.of<DataProvider>(context, listen: false);
+    // var provider = Provider.of<UserProvider>(context, listen: false);
+    // var provider1 = Provider.of<DataProvider>(context, listen: false);
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -76,6 +76,8 @@ class _LoginPageState extends State<LoginPage> {
                     textField1("Enter Your Name", false, false, height, width, Icons.person,
                         userName, validateAbout),
                     textField1("Enter Your phone", false, true, height, width, Icons.phone, phone,
+                        validateAbout, 10),
+                    textField1("Choose Hospital", false, true, height, width, Icons.local_hospital, phone,
                         validateAbout, 10),
                     SizedBox(
                       height: height * 0.05,
@@ -194,10 +196,10 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.all(width * 0.03),
                       child: InkWell(
                         onTap: () {
-                          if (_formKey.currentState?.validate() ?? false) {}
-                          provider.UserName = name;
-                          provider.UserPhoneNumber = phoneNumber;
-                          if (name != "" && phoneNumber != "") Get.to(Register());
+                          // if (_formKey.currentState?.validate() ?? false) {}
+                          // provider.UserName = name;
+                          // provider.UserPhoneNumber = phoneNumber;
+                          // if (name != "" && phoneNumber != "") Get.to(Register());
                         },
                         child: Container(
                           height: height * 0.065,

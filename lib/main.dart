@@ -66,7 +66,12 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
-    return GetMaterialApp(
+    return  MultiProvider(
+        providers: [
+        ChangeNotifierProvider(create: (_) => DataProvider()),
+    ChangeNotifierProvider(create: (_) => UserProvider())
+    ],
+    child:GetMaterialApp(
           title: 'Flutter Demo',
           showSemanticsDebugger: false,
           theme: ThemeData(
@@ -89,8 +94,8 @@ class _MyAppState extends State<MyApp> {
                     child: CircularProgressIndicator(),
                   );
                 }
-                return LoginScreen();
+                return BottomBar();
               })
-    );
+    ));
   }
 }

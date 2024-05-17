@@ -3,10 +3,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:medlist/Providers/DataProvider.dart';
+import 'package:medlist/controllers/prescription_controller.dart';
 import 'package:medlist/db/sqflite.dart';
 import 'package:provider/provider.dart';
 import 'package:timezone/timezone.dart' as tz;
@@ -98,7 +101,7 @@ class _MedicineTimeScreenState extends State<MedicineTimeScreen> {
   //   _alarmHelper.delete(id);
   //   loadAlarms(context);
   // }
-
+final presController = Get.put(PrescriptionController());
   @override
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
@@ -136,16 +139,16 @@ class _MedicineTimeScreenState extends State<MedicineTimeScreen> {
               decoration: BoxDecoration(),
               child: Column(
                   children:
-                      List.generate(provider.medicinesList!.length, (index) {
+                      List.generate(presController.medicineList.length, (index) {
                 return MedicineTimeTile(
                     trackColor: Colors.grey,
                     thumbColor: Colors.blue.shade700,
                     activeColor: Colors.blue.withOpacity(0.5),
                     color: Colors.blue.shade700,
                     index: index,
-                    title: provider.medicinesList![index].title!,
+                    title: presController.medicineList[index].medicineName ?? " ",
                     timing: DateFormat.jm()
-                        .format(provider.medicinesList![index].alarmDateTime!)
+                        .format(presController.medicineList[index].timeTaken!)
                         .toString());
               })),
             ),

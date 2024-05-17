@@ -2,32 +2,37 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:medlist/FirestoreMethods/FirestoreMethods.dart';
 import 'package:medlist/Providers/UserProvider.dart';
+import 'package:medlist/constants/constants.dart';
+import 'package:medlist/controllers/user_controller.dart';
 import 'package:medlist/models/hospital_model.dart';
 import 'package:medlist/pages/auth/login.dart';
 import 'package:provider/provider.dart';
 
-Widget drawer(BuildContext context, String name) {
+Widget drawer(BuildContext context) {
+  final userController = Get.put(UserController());
+  var user = userController.userModel.value;
   var height = MediaQuery.of(context).size.height;
   var provider = Provider.of<UserProvider>(context, listen: false);
   return Drawer(
+    surfaceTintColor: Colors.white,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.only(bottomRight: Radius.circular(30)),
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Container(
           decoration: BoxDecoration(
-              color: Colors.blue.shade700,
+              color: green2,
               borderRadius: BorderRadius.only(
                   bottomRight: Radius.circular(30), bottomLeft: Radius.circular(0))),
           child: Padding(
             padding: const EdgeInsets.all(20.0),
             child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
               children: [
                 CircleAvatar(
                     radius: 40,
@@ -43,9 +48,9 @@ Widget drawer(BuildContext context, String name) {
                   width: 10,
                 ),
                 Text(
-                  name,
-                  style: GoogleFonts.alice(
-                      fontSize: 18, fontWeight: FontWeight.w500, color: Colors.white),
+                  user.patientName ?? "",
+                  style: GoogleFonts.poppins(
+                      fontSize: height*0.02, fontWeight: FontWeight.w500, color: Colors.white),
                 ),
               ],
             ),

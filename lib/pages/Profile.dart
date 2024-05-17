@@ -1,7 +1,9 @@
 // import 'package:aid_up/widgets/TeachCard.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:medlist/controllers/user_controller.dart';
 
 import '../constants/constants.dart';
 
@@ -12,6 +14,8 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var height = MediaQuery.of(context).size.height;
     var width = MediaQuery.of(context).size.width;
+    final userController = Get.put(UserController());
+    var user = userController.userModel.value;
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.white,
@@ -64,7 +68,7 @@ class ProfileScreen extends StatelessWidget {
                 height: height * 0.03,
               ),
               Text(
-                "Nitish Chaurasiya",
+                user.patientName ?? " ",
                 style: GoogleFonts.dmSans(
                     fontWeight: FontWeight.w600, fontSize: height * 0.025, color: green1),
               ),
@@ -82,7 +86,7 @@ class ProfileScreen extends StatelessWidget {
                     width: width * 0.02,
                   ),
                   Text(
-                    "+91 8840867665",
+                    user.phone ?? "",
                     style: GoogleFonts.dmSans(
                         fontWeight: FontWeight.w600,
                         fontSize: height * 0.02,

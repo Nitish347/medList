@@ -25,12 +25,12 @@ class FirestoreData {
         .doc(uid)
         .collection("Medicines")
         .get();
-    List<MedicineModel> list = [];
+    List<Medicine> list = [];
     print(snap.docs[0].data()["medicines"]);
     // print(snap.docs[0].data()["medicines"]);
     for (var data in snap.docs[0].data()["medicines"]) {
       print(data);
-      MedicineModel medicineModel = MedicineModel.fromMap(data);
+      Medicine medicineModel = Medicine.fromMap(data);
       list.add(medicineModel);
       // MedicineSave().insertAlarm(medicineModel, context);
     }
@@ -69,7 +69,7 @@ class FirestoreData {
     // print(snap.docs[0].data()["medicines"]);
     for (var data in snap.docs[0].data()["exercise"]) {
       // print(data);
-      MedicineModel medicineModel = MedicineModel.fromMap(data);
+      Medicine medicineModel = Medicine.fromMap(data);
       ExerciseModel exerciseModel = ExerciseModel.fromMap(data);
       list.add(exerciseModel);
       // MedicineSave().insertAlarm(medicineModel, context);

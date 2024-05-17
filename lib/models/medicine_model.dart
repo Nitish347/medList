@@ -1,27 +1,27 @@
 import 'package:intl/intl.dart';
 
-class MedicineModel {
+class Medicine {
   int? id;
   String? title;
   DateTime? alarmDateTime;
   bool? isPending;
   int? gradientColorIndex;
 
-  MedicineModel(
+  Medicine(
       {this.id,
       this.title,
       this.alarmDateTime,
       this.isPending,
       this.gradientColorIndex});
 
-  factory MedicineModel.fromMap(Map<String, dynamic> json) => MedicineModel(
+  factory Medicine.fromMap(Map<String, dynamic> json) => Medicine(
         id: json["id"],
         title: json["title"],
         alarmDateTime: DateTime.parse(json["alarmDateTime"]),
         isPending: json["isPending"],
         gradientColorIndex: json["gradientColorIndex"],
       );
-  factory MedicineModel.fromMap1(Map<String, dynamic> json) => MedicineModel(
+  factory Medicine.fromMap1(Map<String, dynamic> json) => Medicine(
         id: json["id"],
         title: json["title"],
         alarmDateTime: DateTime.parse(json["alarmDateTime"]),

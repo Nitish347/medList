@@ -6,13 +6,13 @@ import 'package:medlist/models/pastMedicine_model.dart';
 import '../models/dietPlan.dart';
 
 class DataProvider with ChangeNotifier {
-  List<MedicineModel>? medicinesList;
+  List<Medicine>? medicinesList;
   List<ExerciseModel>? exerciseList;
   List<PastMedicineModel>? pastMedicineList;
   DietModel? dietPlan;
   // DietModel? DietModel;
 
-  void medicinesListUpdate(List<MedicineModel>? medicinesList) {
+  void medicinesListUpdate(List<Medicine>? medicinesList) {
     this.medicinesList = medicinesList;
     notifyListeners();
   }

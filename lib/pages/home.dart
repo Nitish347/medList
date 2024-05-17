@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:convert';
-
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:lottie/lottie.dart';
@@ -15,6 +17,8 @@ import 'package:medlist/Hive/readHive.dart';
 import 'package:medlist/Hive/writeData.dart';
 import 'package:medlist/Providers/DataProvider.dart';
 import 'package:medlist/alarm_helper.dart';
+import 'package:medlist/controllers/prescription_controller.dart';
+import 'package:medlist/controllers/user_controller.dart';
 import 'package:medlist/db/sqflite.dart';
 import 'package:medlist/models/hospital_model.dart';
 import 'package:medlist/pages/DietPlanScreen.dart';
@@ -81,6 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
+    loadData();
     super.initState();
     // _alarmHelper.initializeDatabase().then((value) {
     //   print("*******************ho gyaa");
@@ -90,10 +95,23 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     _remainingSeconds = 200;
     _startTimer(4000);
-    loading();
+
+    // loading();
     // read();
   }
-
+  final userController = Get.put(UserController());
+  final presController = Get.put(PrescriptionController());
+  bool _loading = false;
+loadData()async{
+  setState(() {
+    _loading = true;
+  });
+  await userController.getUser();
+  await presController.getMedicines();
+    setState(() {
+      _loading = false;
+    });
+}
   void _calculateTime(int totalSeconds) {
     _remainingHours = totalSeconds ~/ 3600;
     _remainingMinutes = (totalSeconds % 3600) ~/ 60;
@@ -118,20 +136,20 @@ class _HomeScreenState extends State<HomeScreen> {
   int _remainingMinutes = 0;
   int _remainingSeconds = 0;
   String nameUser = "";
-
-  void loading() async {
-    await FirestoreData.userData(context, widget.uid);
-
-    var namee = await FirebaseFirestore.instance.collection("Users").doc(widget.uid).get();
-    setState(() {
-      nameUser = namee["Name"];
-    });
-
-    await FirestoreData.hospitalData(context, widget.uid);
-    await FirestoreData.medicinesData(context, widget.uid);
-    await FirestoreData.exerciseData(context, widget.uid);
-    await FirestoreData.dietPlan(context, widget.uid);
-  }
+  //
+  // void loading() async {
+  //   await FirestoreData.userData(context, widget.uid);
+  //
+  //   var namee = await FirebaseFirestore.instance.collection("Users").doc(widget.uid).get();
+  //   setState(() {
+  //     nameUser = namee["Name"];
+  //   });
+  //
+  //   await FirestoreData.hospitalData(context, widget.uid);
+  //   await FirestoreData.medicinesData(context, widget.uid);
+  //   await FirestoreData.exerciseData(context, widget.uid);
+  //   await FirestoreData.dietPlan(context, widget.uid);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -148,8 +166,9 @@ class _HomeScreenState extends State<HomeScreen> {
           },
           child: Icon(Icons.chat),
         ),
-        drawer: drawer(context, nameUser),
+        drawer: drawer(context),
         appBar: AppBar(
+          surfaceTintColor: Colors.white,
           // leading: Icon(
           //   Icons.menu,
           //   color: green1,
@@ -201,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
           // ),
         ),
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
+        body:  _loading ? Center(child: LoadingAnimationWidget.fourRotatingDots(color: green1, size: height*0.04),)  :     SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: widht * 0.03),
             child: Column(
@@ -249,7 +268,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     SizedBox(
                       child: Text(
-                        "Hello\nNitish!",
+                        "Hello\n${userController.userModel.value.patientName}!",
                         textAlign: TextAlign.start,
                         style: GoogleFonts.poppins(
                           fontWeight: FontWeight.w500,

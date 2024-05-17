@@ -52,6 +52,7 @@ dependencies:
   google_nav_bar: ^5.0.6
   line_icons: ^2.0.3
   flutter_secure_storage: ^9.0.0
+  loading_animation_widget: ^1.2.0+4
 
   quickalert: ^1.0.2
 #  flutter_screenutil: ^5.9.0

@@ -74,7 +74,7 @@ class SearchScreen extends StatelessWidget {
               height: height * 0.02,
             ),
             Container(
-              width: width * 0.3,
+              width: width * 0.4,
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 color: green6.withOpacity(0.8),
@@ -110,8 +110,8 @@ class SearchScreen extends StatelessWidget {
             Expanded(
               child: Container(
                   child: ListView(
-                children: List.generate(10, (index) {
-                  return TeachCard2(height, width, "Ajay Kumar Garg Engineering Clinic",
+                children: List.generate(1, (index) {
+                  return TeachCard2(height, width, "Max Hospital",
                       "Ghaziabad", "09:00 am - 05:00 pm");
                 }),
               )),

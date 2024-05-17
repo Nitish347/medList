@@ -37,7 +37,7 @@ Widget TeachCard2(double height, double width, String ngo, String address, Strin
                       ),
                 ),
                 Text(
-                  "Nitish Chaurasiya",
+                  "Ajay Chaudhary",
                   style: GoogleFonts.dmSans(
                       color: Colors.black, fontSize: height * 0.018, fontWeight: FontWeight.w500),
                 ),
@@ -45,7 +45,7 @@ Widget TeachCard2(double height, double width, String ngo, String address, Strin
               ],
             ),
             SizedBox(
-              width: width * 0.05,
+              width: width * 0.04,
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,

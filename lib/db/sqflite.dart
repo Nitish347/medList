@@ -47,7 +47,7 @@ class MedicineSave {
     return database;
   }
 
-  void insertAlarm(MedicineModel medicineModel, BuildContext context) async {
+  void insertAlarm(Medicine medicineModel, BuildContext context) async {
     // var provider = Provider.of<DataProvider>(context, listen: false);
     var db = await this.database;
     // for (int i = 0; i < provider.medicinesList!.length; i++) {
@@ -61,17 +61,17 @@ class MedicineSave {
     print('result : $result');
   }
 
-  Future<List<MedicineModel>> getAlarms(BuildContext context) async {
+  Future<List<Medicine>> getAlarms(BuildContext context) async {
     print("fetching data from db******************************");
     var provider = Provider.of<DataProvider>(context, listen: false);
-    List<MedicineModel> _alarms = [];
-    List<MedicineModel> _alarms1 = [];
+    List<Medicine> _alarms = [];
+    List<Medicine> _alarms1 = [];
     List<ExerciseModel> _alarms2 = [];
 
     var db = await this.database;
     var result = await db.query(tableAlarm);
     result.forEach((element) {
-      var alarmInfo = MedicineModel.fromMap1(element);
+      var alarmInfo = Medicine.fromMap1(element);
       _alarms.add(alarmInfo);
     });
     // print(_alarms);
